@@ -44,9 +44,9 @@ try
 Connection con=DbConnection.getConnection();
 String cmd="INSERT INTO user VALUES(?,?,?)";
 PreparedStatement ps=con.prepareStatement(cmd);
-ps.setString(1, l.getUserName());
-ps.setString(2, l.getPassword());
-ps.setString(3, l.getEmailId());
+ps.setString(2, l.getUserName());
+ps.setString(3, l.getPassword());
+ps.setString(1, l.getEmailId());
 ps.executeUpdate();
 return true;
 }catch(Exception e)
@@ -139,7 +139,6 @@ try
 Connection con=DbConnection.getConnection();
 String cmd="DELETE FROM user WHERE emailId=?";
 PreparedStatement ps=con.prepareStatement(cmd);
-System.out.println("enter the username to Delete: ");
 //String uname=sc.next();
 ps.setString(1, id);
 ps.executeUpdate();

@@ -95,20 +95,21 @@ return false;
 }
 public boolean changeRate(int id,double rate)
 {
-try
-{
-Connection con=DbConnection.getConnection();
-String cmd="UPDATE item SET rate=? WHERE itemId=?";
-PreparedStatement ps=con.prepareStatement(cmd);
-ps.setDouble(1,rate);
-ps.setInt(2, id);
-ps.executeUpdate();
-return true;
-}catch(Exception e)
-{
-e.printStackTrace();
-}
-return false;
+	try
+	{
+			Connection con=DbConnection.getConnection();
+			String cmd="UPDATE item SET rate=? WHERE itemId=?";
+			PreparedStatement ps=con.prepareStatement(cmd);
+			ps.setDouble(1,rate);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+			return true;
+	}
+	catch(Exception e)
+	{
+			e.printStackTrace();
+	}
+	return false;
 }
 public double changeQuantityBuy(int id,int quantity)
 {
