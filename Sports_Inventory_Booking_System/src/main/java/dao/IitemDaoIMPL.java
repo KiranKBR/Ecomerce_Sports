@@ -79,7 +79,7 @@ public boolean changeDetails(int id,String name,int quantity,double rate)
 try
 {
 Connection con=DbConnection.getConnection();
-String cmd="UPDATE item SET name=?, quantity=?, rate=? WHERE itemId=?";
+String cmd="UPDATE item SET name=?, quantity=?, price=? WHERE itemId=?";
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setString(1,name);
 ps.setInt(2, quantity);
@@ -116,7 +116,7 @@ double price=0;
 try
 {
 Connection con=DbConnection.getConnection();
-String c="select quantity,rate from item where itemId=?";
+String c="select quantity,price from item where itemId=?";
 PreparedStatement ps2=con.prepareStatement(c);
 ps2.setInt(1, id);
 int q=0;
