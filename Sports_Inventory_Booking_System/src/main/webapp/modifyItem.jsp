@@ -8,35 +8,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-<ceter>
-<table>
-<form action="AdminProcessor">
-<table>
-<tr>
-	<td>Book Id</td>
-	<td><input type="number" name="bId"></td>
-	<td><button type="submit" name="action" value="isBookExist">Click</button></td>
-</tr>
-</table>
-</form>
-<c:choose>
-	<c:when test="${currentPrice!=null}">
+
+	
 	<form action="AdminProcessor">
 	<table>
 	<tr>
-		<th>Current Price</th>
-		<th>New Price</th>
+		<td><input type="number" name="eId"></td>
 	</tr>
 	<tr>
-		<td>${currentPrice}</td>
+		
 		<td><input type="number" name="nwPrice" /></td>
 	</tr>
 	<tr>
-		<td colspan="2"><button type="submit" name="action" value="changeBookPrice" >Update</button>
+		<td colspan="2"><button type="submit" name="action" value="changeItemPrice" >Update</button>
 	</table>
 	</form>
-	</c:when>
-</c:choose>
-</table>
 </body>
 </html>

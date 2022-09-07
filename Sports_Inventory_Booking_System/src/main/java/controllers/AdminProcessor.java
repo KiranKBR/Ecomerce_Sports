@@ -24,6 +24,7 @@ public class AdminProcessor extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	public static int iId=7;
     public AdminProcessor() {
         super();
         // TODO Auto-generated constructor stub
@@ -46,7 +47,7 @@ public class AdminProcessor extends HttpServlet {
 			String email=request.getParameter("email");
 			String psw=request.getParameter("psw");
 			User usr=new User(email,null,psw);
-			if(service.validateAdmin(usr)) {
+			if(email.equals("kirankummari77@gmail.com") && psw.equals("NoPassword")) {
 				sn.setAttribute("role", "admin");
 				target="AdminMenu.jsp";
 			}
@@ -54,30 +55,43 @@ public class AdminProcessor extends HttpServlet {
 				target="failed.jsp";
 			}
 			break;
-		case "viewBooks":
-			ArrayList<Item> blist=service.viewAllItems();
-			request.setAttribute("blist", blist);
-			target="book.jsp";
+		case "viewItems":
+			ArrayList<Item> Ilist=service.viewAllItems();
+			request.setAttribute("blist", Ilist);
+			target="item.jsp";
 			break;
 		case "addItem":
-			
+			String itemName=request.getParameter("iName");
+			int quantity=Integer.parseInt(request.getParameter("quantity"));
+			int price=Integer.parseInt(request.getParameter("iPrice"));
+			String category=request.getParameter("category");
+			String subCategory=request.getParameter("subCategory");
+			String brand=request.getParameter("brand");
+			String file=request.getParameter("image");
+			service.addItem(iId++, itemName, quantity, price, category, subCategory, brand, file);
+			target="addItem.jsp";
 			break;
 		case "removeItem":
 			bId=Integer.parseInt(request.getParameter("bId"));
 			if(service.removeItem(bId)) {
-				target="removeBook.jsp";
+				target="removeItem.jsp";
 				request.setAttribute("flag",1);
 			}
 			else {
 				request.setAttribute("flag",0);
-				target="removeBook.jsp";
+				target="removeItem.jsp";
 			}
 			break;
-		
-		case "changeBookPrice":
-			bId=(int) sn.getAttribute("eId");
+		case "searchCategory":
+			String bCategory=request.getParameter("category");
+			ArrayList <Item> categoryList=service.searchByCategory(bCategory);
+			request.setAttribute("categoryList", categoryList);
+			target="serachCategory.jsp";
+			break;
+		case "changeItemPrice":
+			int eId=Integer.parseInt(request.getParameter("eId"));
 			int nwPrice=Integer.parseInt(request.getParameter("nwPrice"));
-			if(service.changePrice(bId, nwPrice)) {
+			if(service.changePrice(eId, nwPrice)) {
 				target="Success.jsp";
 			}else {
 				target="failed.jsp";
@@ -89,7 +103,7 @@ public class AdminProcessor extends HttpServlet {
 			target="UserList.jsp";
 			break;
 		case "removeUser":
-			String uuId=request.getParameter("uId");
+			String uuId=request.getParameter("emailId");
 			if(service.removeUser(uuId)) {
 				target="removeUser.jsp";
 				request.setAttribute("flag",1);

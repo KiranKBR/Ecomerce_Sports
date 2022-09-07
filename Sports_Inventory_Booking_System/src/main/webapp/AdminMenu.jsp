@@ -10,28 +10,24 @@
 <h1>Login Successful</h1>
 <table>
 <tr>
-	<td>Add an Admin</td>
-	<td><a href="AdminSignUp.jsp">Click Here</a></td>
-</tr>
-<tr>
 	<td>View all the Items</td>
 	<td><a href="AdminProcessor?action=viewItems">Click Here</a></td>
 </tr>
 <tr>
 	<td>Add the new Item</td>
-	<td><a href="addBook.jsp">Click Here</a></td>
+	<td><a href="addItem.jsp">Click Here</a></td>
 </tr>
 <tr>
 	<td>Search by Category of Item</td>
-	<td><a href="searchCategory.jsp">Click Here</a></td>
+	<td><a href="serachCategory.jsp">Click Here</a></td>
 </tr>
 <tr>
 	<td>Remove Item</td>
-	<td><a href="removeBook.jsp">Click Here</a></td>
+	<td><a href="removeItem.jsp">Click Here</a></td>
 </tr>
 <tr>
 	<td>Change Item Price</td>
-	<td><a href="modifyBook.jsp">Click Here</a></td>
+	<td><a href="modifyItem.jsp">Click Here</a></td>
 </tr>
 <tr>
 	<td>View all Users</td>

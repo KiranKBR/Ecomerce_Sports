@@ -14,32 +14,38 @@ HttpSession sn=request.getSession();
 String role=(String)sn.getAttribute("role");
 %>
 <form action="AdminProcessor">
-<input type="text" name="bCategory" />
+<input type="text" name="category" />
 <button type="submit" name="action" value="searchCategory">Search</button>
 </form><br><br>
-<%
-ArrayList <Item> clist=(ArrayList<Item>)request.getAttribute("categoryList");
-if(clist!=null){
-  %>
+<c:choose>
+<c:when test="${categoryList!='null'}">
 <table border="1">
 <tr>
-		<th>S.No</th>
+		<th>Id.No</th>
 		<th>Name</th>
-		<th>Author</th>
-		<th>Category</th>
-		<th>Quantity</th>
 		<th>Price</th>
+		<th>Category</th>
+		<th>SubCategory</th>
+		<th>Brand</th>
 </tr>
 	<c:forEach var="i" items="${categoryList}">
 <tr>
-	<td >${i.getBookId()}</td>
-	<td >${i.getBookName()}</td>
-	<td >${i.getBookAuthor()}</td>
-	<td >${i.getBookCategory()}</td>
-	<td >${i.getQuantity()}</td>
-	<td >${i.getBookPrice()}</td>
+	<td >
+	${i.getItemId()}<br>
+	</td>
+	<td>
+	${i.getItemName()}<br></td>
+	<td>
+	${i.getRate()}<br></td>
+	<td>
+	${i.getCategory() }<br></td>
+	<td>
+	${i.getSubCategory() }<br></td>
+	<td>
+	${i.getBrand() }<br></td>
+	
 	<% if(role.equals("user")){ %> 
-	<td ><a href="UserProcessor?action=addCart&bookId=${i.getBookId()}&bookName=${i.getBookName()}&bookPrice=${i.getBookPrice()}" >add To Cart</a></td>
+	<td ><a href="UserProcessor?action=addCart&bookId=${i.getItemId()}&bookName=${i.getItemName()}&bookPrice=${i.getRate()}" >add To Cart</a></td>
 	<td><button type="button" onclick="">BuyNow</button></td>
 	<%
 	}
@@ -47,8 +53,9 @@ if(clist!=null){
 </tr>
 	</c:forEach>
 </table>
-<% 
-	}   %>
+</c:when>
+</c:choose>
+
 <% if(role.equals("admin")){ %> 
 <a href="AdminMenu.jsp" >Go to Admin Menu</a>
 <% }  %>

@@ -49,7 +49,8 @@ System.out.println("Sorry item can't be added");
 }
 break;
 case 3:
-if(as.removeItem())
+	int id=scan.nextInt();
+if(as.removeItem(id))
 {
 System.out.println("item removed successfully");
 }
@@ -81,7 +82,8 @@ System.out.println(u);
 }
 break;
 case 7:
-if(as.removeUser())
+	String emailid=scan.nextLine();
+if(as.removeUser(emailid))
 {
 System.out.println("user deleted successfully");
 }

@@ -9,25 +9,10 @@
 <body>
 <form action="AdminProcessor">
 <table>
-<tr>
-	<td>Book id:</td>
-	<td><input type="number" name="bId" /></td>
-</tr>
+
 <tr>
 	<td>Item Name:</td>
-	<td><input type="text" name="IName" /></td>
-</tr>
-<tr>
-	<td>Brand:</td>
-	<td><input type="text" name="bAuthor" /></td>
-</tr>
-<tr>
-	<td>Category:</td>
-	<td><input type="text" name="bCategory" /></td>
-</tr>
-<tr>
-	<td>Sub Category:</td>
-	<td><input type="text" name="bCategory" /></td>
+	<td><input type="text" name="iName" /></td>
 </tr>
 <tr>
 	<td>Quantity:</td>
@@ -35,16 +20,29 @@
 </tr>
 <tr>
 	<td>Price</td>
-	<td><input type="number" name="bPrice" /></td>
+	<td><input type="number" name="iPrice" /></td>
 </tr>
 <tr>
-	<td>Add the book</td>
+	<td>Category:</td>
+	<td><input type="text" name="category" /></td>
+</tr>
+<tr>
+	<td>Sub Category:</td>
+	<td><input type="text" name="subCategory" /></td>
+</tr>
+<tr>
+	<td>Brand</td>
+	<td><input type="text" name="brand" /></td>
+</tr>
+
+<tr>
+	<td>Add the Item</td>
 	<td><input type="file" name="image" /></td>
 </tr>
 <tr>
-	<td colspan="2"><button type="submit" name="action" value="addBook">Add</button>
+	<td colspan="2"><button type="submit" name="action" value="addItem">Add</button>
 </table>
 </form>
-<button type="button"  onclick="location.href='AdminProcessor?action=viewBooks' ">View Books</button>
+<button type="button"  onclick="location.href='AdminProcessor?action=viewItems' ">View Books</button>
 </body>
 </html>

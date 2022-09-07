@@ -13,9 +13,9 @@ HttpSession sn=request.getSession();
 String role=(String)sn.getAttribute("role");
 %>
 <form action="AdminProcessor">
-<h4>Enter the Book Id </h4>
+<h4>Enter the Item Id </h4>
 <input type="number" name="bId" />
-<button type="submit" name="action" value="removeBook">Remove</button>
+<button type="submit" name="action" value="removeItem">Remove</button>
 </form>
 <% if(role.equals("admin")){ %>
 	<a href="AdminMenu.jsp" >Go to Admin Menu</a>

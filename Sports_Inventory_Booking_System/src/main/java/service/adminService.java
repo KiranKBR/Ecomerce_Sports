@@ -12,18 +12,11 @@ public class adminService {
 Scanner scan =new Scanner(System.in);
 IitemDaoIMPL idb;
 ILoginDaoIMPL udb;
-public boolean addItem()
+public boolean addItem(int itemId,String itemName,int quantity,int price,String category,String subCategory,String brand,String file)
 {
-		System.out.println("Enter the item id: ");
-		int id=Integer.parseInt(scan.nextLine());
-		System.out.println("Enter the itemname: ");
-		String name=scan.nextLine();
-		System.out.println("Enter the quantity ");
-		int quan=scan.nextInt();
-		System.out.println("Enter the rate");
-		double rate=scan.nextDouble();
+		
 		idb=new IitemDaoIMPL();
-return idb.addItem(new Item(name,id,quan,rate));
+return idb.addItem(new Item(itemId,itemName,quantity,price,category,subCategory,brand,file));
 }
 
 public ArrayList<Item> viewAllItems()
@@ -80,7 +73,10 @@ public boolean changePrice(int bId, int nwPrice) {
 	return idb.changeRate(bId, nwPrice);
 }
 
-
+public ArrayList<Item> searchByCategory(String category){
+	idb=new IitemDaoIMPL();
+	return idb.getItemsByCategory(category);
+}
 
 
 

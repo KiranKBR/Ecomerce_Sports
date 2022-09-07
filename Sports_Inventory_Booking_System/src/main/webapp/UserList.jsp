@@ -12,23 +12,18 @@
 <h1>welcome</h1>
 <table width=700 >
 <tr>
-	<th>User Id</th>
-	<th>Email</th>
+	<th>Email Id</th>
+	<th>Name</th>
 	<th>password</th>
-	<th>location</th>
-	<th>Age</th>
-	<th>Mobile Number</th>
-	<th>Date Of Birth</th>
+	
 </tr>
 <c:forEach var="i" items="${ulist}">
 <tr>
-	<td>${i.getUserId()}</td>
-	<td>${i.getUserEmail()}</td>
-	<td>${i.getPassWord()}</td>
-	<td>${i.getLocation()}</td>
-	<td>${i.getAge()}</td>
-	<td>${i.getUserMobileNo()}</td>
-	<td>${i.getDob()}</td>
+
+	<td>${i.getEmailId()}</td>
+		<td>${i.getUserName()}</td>
+	<td>${i.getPassword()}</td>
+	
 </tr>
 </c:forEach>
 </table>

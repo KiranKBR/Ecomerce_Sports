@@ -11,7 +11,7 @@
 <center>
 <form action="AdminProcessor">
 <h4>Enter the userID to remove:</h4>
-<input type="number" name="uId" />
+<input type="text" name="emailId" />
 <button type="submit" name="action" value="removeUser">Remove</button>
 </form>
 <br>

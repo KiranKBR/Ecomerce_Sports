@@ -22,7 +22,7 @@ try
 double price=itt.changeQuantityBuy(i, quantity);
 Connection con=DbConnection.getConnection();
 
-String cmd="INSERT INTO cart(invoiceId,itemId,quantity,tprice,email) VALUES(?,?,?,?)";
+String cmd="INSERT INTO kart(invoiceId,itemId,quantity,tprice,email) VALUES(?,?,?,?)";
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setInt(1,-1);
 ps.setInt(2,i);
@@ -53,7 +53,7 @@ try
 {
 ArrayList<Integer> cartIntList=new ArrayList<Integer>();
 Connection con=DbConnection.getConnection();
-String cmd="SELECT itemId FROM cart where invoiceId=?";
+String cmd="SELECT itemId FROM Kart where invoiceId=?";
 
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setInt(1, iid);
@@ -82,7 +82,7 @@ while(res1.next())
 int id=res1.getInt(1);
 String itemName=res1.getString(2);
 int quantity=res1.getInt(3);
-double price=res1.getDouble(4);
+int price=res1.getInt(4);
 Item l=new Item(itemName,i,quantity,price);
 System.out.println(i);
 cartItemList.add(l);
@@ -105,7 +105,7 @@ public boolean removeItem(int id,User user) {
 
 try {
 Connection con=DbConnection.getConnection();
-String cmd1="select quantity from cart where itemId=?";
+String cmd1="select quantity from kart where itemId=?";
 int quantity=0;
 PreparedStatement ps2=con.prepareStatement(cmd1);
 ps2.setInt(1, id);
@@ -120,7 +120,7 @@ itt.changeQuantityRemove(id, quantity);
 
 
 
-String cmd="delete from cart where itemId=?";
+String cmd="delete from kart where itemId=?";
 
 PreparedStatement ps;
 
@@ -146,7 +146,7 @@ public boolean updateQuantity(int i,int q,User user) {
 // TODO Auto-generated method stub
 double price=itt.changeQuantityBuy(i, q);
 Connection con=DbConnection.getConnection();
-String cmd="update cart set quantity=?,tprice=? where itemId=? and email=?";
+String cmd="update kart set quantity=?,tprice=? where itemId=? and email=?";
 
 PreparedStatement ps;
 try {
@@ -171,7 +171,7 @@ public boolean removeQuantity(int id, int q,User user) {
 
 try {
 Connection con=DbConnection.getConnection();
-String cmd1="select quantity from cart where itemId=?";
+String cmd1="select quantity from kart where itemId=?";
 PreparedStatement ps2=con.prepareStatement(cmd1);
 ps2.setInt(1, id);
 ResultSet res1=ps2.executeQuery();
@@ -183,7 +183,7 @@ itt.changeQuantityRemove(id, q);
 
 
 
-String cmd="update cart set quantity=? where itemId=?";
+String cmd="update kart set quantity=? where itemId=?";
 
 PreparedStatement ps;
 
