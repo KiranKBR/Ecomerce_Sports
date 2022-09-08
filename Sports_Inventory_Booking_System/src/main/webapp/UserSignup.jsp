@@ -12,32 +12,29 @@
 
 <tr>
 	<td>Email</td>
-	<td><input type="text" name="uEmail" /></td>
+	<td><input type="text" name="email" /></td>
 </tr>
 <tr>
-	<td>Password</td>
-	<td><input type="password" name="uPwd" /></td>
-</tr>
-<tr>
-	<td>Name</td>
+	<td>name</td>
 	<td><input type="text" name="name" /></td>
 </tr>
 <tr>
-	<td>location</td>
-	<td><input type="text" name="ulocation" /></td>
+	<td>Password</td>
+	<td><input type="password" name="pass" /></td>
+</tr>
+<tr>
+	<td>address</td>
+	<td><input type="text" name="address" /></td>
 </tr>
 <tr>
 	<td>age</td>
-	<td><input type="number" name="uAge" /></td>
+	<td><input type="number" name="age" /></td>
 </tr>
 <tr>
 	<td>Mobile Number</td>
-	<td><input type="number" name="uMobileNumber" /></td>
+	<td><input type="number" name="number" /></td>
 </tr>
-<tr>
-	<td>Date Of Birth</td>
-	<td><input type="date" name="dob" /></td>
-</tr>
+<
 <tr>
 	<td colspan="2"><input type="submit" name="action" value="signup" /></td>
 </tr>

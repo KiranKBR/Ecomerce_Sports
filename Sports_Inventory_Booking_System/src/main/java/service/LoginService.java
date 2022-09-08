@@ -21,10 +21,10 @@ boolean flag=dao.addUser(l);
 System.out.println(l);
 return flag;
 }
-public boolean validateUser(User l)
+public User validateUser(User l)
 {
 dao=new ILoginDaoIMPL();
-boolean flag=dao.validateUser(l);
+User flag=dao.validateUser(l);
 return flag;
 }
 public User searchUser()

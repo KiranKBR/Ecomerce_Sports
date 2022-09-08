@@ -14,7 +14,7 @@ public class InvoiceDaoIMPL implements Iinvoice{
 static int iid=1;
 IitemDaoIMPL itt=new IitemDaoIMPL();
 @Override
-public boolean addItem(int i,int quantity,User user) {
+public boolean addItem(int i,int quantity,String mail) {
 // TODO Auto-generated method stub
 
 try
@@ -22,13 +22,14 @@ try
 double price=itt.changeQuantityBuy(i, quantity);
 Connection con=DbConnection.getConnection();
 
-String cmd="INSERT INTO kart(invoiceId,itemId,quantity,tprice,email) VALUES(?,?,?,?)";
+String cmd="INSERT INTO kart(invoiceId,itemId,emailId,quantiy,price) VALUES(?,?,?,?,?)";
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setInt(1,-1);
 ps.setInt(2,i);
-ps.setInt(3,quantity);
-ps.setDouble(4, price);
-ps.setString(5, user.getEmailId()); //ps.setString(2, i.getItemName());
+ps.setInt(4,quantity);
+
+ps.setDouble(5, price);
+ps.setString(3, mail); //ps.setString(2, i.getItemName());
 //ps.setInt(3, i.getQuantity());
 //ps.setDouble(4,i.getRate());
 ps.executeUpdate();
@@ -115,7 +116,7 @@ while(res1.next()) {
 quantity=res1.getInt(1);
 }
 //double price=res1.getDouble(4);
-itt.changeQuantityRemove(id, quantity);
+
 
 
 
@@ -178,7 +179,7 @@ ResultSet res1=ps2.executeQuery();
 ///String itemName=res1.getString(2);
 int quantity=res1.getInt(1);
 //double price=res1.getDouble(4);
-itt.changeQuantityRemove(id, q);
+
 
 
 
@@ -198,6 +199,12 @@ e.printStackTrace();
 }
 return false;
 
+}
+
+@Override
+public boolean addItem(int i, int quantity, User user) {
+	// TODO Auto-generated method stub
+	return false;
 }
 
 }

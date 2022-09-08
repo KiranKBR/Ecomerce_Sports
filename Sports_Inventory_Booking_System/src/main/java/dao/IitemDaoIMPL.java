@@ -7,9 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.Item;
+import dto.Kart;
 import util.DbConnection;
 
 public class IitemDaoIMPL implements IItem{
+	
+	private String query;
+    private PreparedStatement pst;
+    private ResultSet rs;
 
 public boolean addItem(Item i)
 {
@@ -67,6 +72,65 @@ e.printStackTrace();
 }
 return null;
 }
+
+public ArrayList<Kart> getKartItems(String emailId)
+{
+try
+{
+		ArrayList<Kart> itemList=new ArrayList<Kart>();
+		Connection con=DbConnection.getConnection();
+		String cmd="SELECT * FROM kart where emailId=?";
+		PreparedStatement ps=con.prepareStatement(cmd);
+		ps.setString(1, emailId);
+
+		ResultSet res=ps.executeQuery();
+		  while(res.next())
+		  {
+			int id=res.getInt(1);
+			String itemName=res.getString(2);
+			int karQuan=res.getInt(4);
+			int price=res.getInt(5);
+			
+			Kart l=new Kart(id,itemName,karQuan,price);
+			itemList.add(l);
+		  }
+
+return itemList;
+}
+catch(Exception e)
+{
+e.printStackTrace();
+}
+return null;
+}
+
+
+public int getTotalCartPrice(ArrayList<Kart> cartList) {
+    int sum = 0;
+    try {
+        if (cartList.size() > 0) {
+            for (Kart item : cartList) {
+               
+                Connection con=DbConnection.getConnection();
+        		String cmd="select price from item where itemId=?";
+        		PreparedStatement ps=con.prepareStatement(cmd);
+        		ps.setInt(1, item.getItemId());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    sum+=rs.getDouble("price")*item.getQuantity();
+                }
+
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println(e.getMessage());
+    }
+    return sum;
+}
+
+
 
 
 
@@ -153,33 +217,7 @@ e.printStackTrace();
 return price;
 }
 
-public boolean changeQuantityRemove(int id,int quantity)
-{
-try
-{
-Connection con=DbConnection.getConnection();
-String c="select quantity form item where itemId=?";
-PreparedStatement ps2=con.prepareStatement(c);
-ps2.setInt(1, id);
-ResultSet res=ps2.executeQuery();
-int q=res.getInt(1);
 
-
-String cmd1="update item set quantity=? where itemId=?";
-PreparedStatement ps1=con.prepareStatement(cmd1);
-ps1.setInt(1,q+quantity );
-ps1.setInt(2,id);
-//ps1.setInt(3,quantity);
-//ps.setString(2, i.getItemName());
-//ps.setInt(3, i.getQuantity());
-//ps.setDouble(4,i.getRate());
-ps1.executeUpdate();
-}catch(Exception e)
-{
-e.printStackTrace();
-}
-return false;
-}
 
 @Override
 public Item viewItem(int id) {

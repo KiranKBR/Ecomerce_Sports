@@ -45,8 +45,8 @@ public class AdminProcessor extends HttpServlet {
 		switch(action) {
 		case "adLogin":
 			String email=request.getParameter("email");
-			String psw=request.getParameter("psw");
-			User usr=new User(email,null,psw);
+			String psw=request.getParameter("password");
+			
 			if(email.equals("kirankummari77@gmail.com") && psw.equals("NoPassword")) {
 				sn.setAttribute("role", "admin");
 				target="AdminMenu.jsp";

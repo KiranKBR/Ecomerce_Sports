@@ -23,10 +23,13 @@ PreparedStatement ps=con.prepareStatement(cmd);
 ResultSet res=ps.executeQuery();
 while(res.next())
 {
-String uname=res.getString(1);
-String pass=res.getString(2);
-String email=res.getString(3);
-User l=new User(uname,pass,email);
+String email=res.getString(1);
+String name=res.getString(2);
+String pass=res.getString(3);
+int age=res.getInt(4);
+String address=res.getString(5);
+String phoneNumber=res.getString(6);
+User l=new User(email,name,pass,age,address,phoneNumber);
 loginlist.add(l);
 }
 return loginlist;
@@ -42,11 +45,14 @@ public boolean addUser(User l)
 try
 {
 Connection con=DbConnection.getConnection();
-String cmd="INSERT INTO user VALUES(?,?,?)";
+String cmd="INSERT INTO user VALUES(?,?,?,?,?,?)";
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setString(2, l.getUserName());
 ps.setString(3, l.getPassword());
 ps.setString(1, l.getEmailId());
+ps.setInt(4, l.getAge());
+ps.setString(5, l.getAddress());
+ps.setString(6, l.getPhoneNumber());
 ps.executeUpdate();
 return true;
 }catch(Exception e)
@@ -56,7 +62,7 @@ e.printStackTrace();
 return false;
 
 }
-public boolean validateUser(User l)
+public User validateUser(User l)
 {
 try
 {
@@ -68,8 +74,11 @@ ps.setString(2, l.getPassword());
 ResultSet res=ps.executeQuery();
 if(res.next()) {
 l.setUserName(res.getString(1));
-return true;}
-return false;
+l.setAge(res.getInt(4));
+l.setAddress(res.getString(5));
+l.setPhoneNumber(res.getString(6));
+return l;}
+return null;
 
 }
 
@@ -77,26 +86,29 @@ catch(Exception e)
 {
 e.printStackTrace();
 }
-return false;
+return null;
+
 }
 
 @Override
-public User searchUser()
+public User searchUser(String email)
 {
 try
 {
 Connection con=DbConnection.getConnection();
 String cmd="SELECT * FROM user WHERE emailId=?";
 PreparedStatement ps=con.prepareStatement(cmd);
-System.out.println("enter the username to search: ");
-String uname=sc.next();
-ps.setString(1,uname);
+ps.setString(1,email);
 ResultSet res=ps.executeQuery();
 if(res.next())
 {
-String u=res.getString(1);
-String p=res.getString(2);
-User s=new User(u,p);
+String email1=res.getString(1);
+String name=res.getString(2);
+String pass=res.getString(3);
+int age=res.getInt(4);
+String address=res.getString(5);
+String phone=res.getString(6);
+User s=new User(email1,name,pass,age,address,phone);
 return s;
 }
 }catch(Exception e)
@@ -175,6 +187,12 @@ e.printStackTrace();
 }
 return false;
 
+}
+
+@Override
+public User searchUser() {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 }

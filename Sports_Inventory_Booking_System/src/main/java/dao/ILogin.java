@@ -11,6 +11,7 @@ public boolean modifyUser();
 public boolean removeUser();
 public ArrayList<User> viewAllUsers();
 public boolean addUser(User l);
-public boolean validateUser(User l);
+public User validateUser(User l);
 public boolean updatePass(User l);
+User searchUser(String email);
 }

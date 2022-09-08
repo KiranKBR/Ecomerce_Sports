@@ -5,48 +5,38 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<style>
-input[type=text],
-input[type=email],
-input[type=password]{
-   	width: 100%;
-    padding:10px 20px;
-	margin: 8px 0;
-    display: inline-block;
-	border: 1px solid #ccc;
-	box-sizing: border-box;
- }
- button {
-        background-color: #4CAF50;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        width: 100%;
-    }
- button:active 
-    {background-color: #61ede8};
-</style>
 </head>
 <body>
-<center>
-<h1>SignUp Form</h1>
-<form action="AdminProcessor">
-<table width=500 height=250>
+<form action="UserProcessor">
+<table>
+
 <tr>
-	<td><b>Name:</b></td>
-	<td><input type="text" name="adName" required /></td>
+	<td>Email</td>
+	<td><input type="text" name="email" /></td>
 </tr>
 <tr>
-	<td><b>Email:</b></td>
-	<td><input type="email" name="adEmail" required/></td>
+	<td>name</td>
+	<td><input type="text" name="name" /></td>
 </tr>
 <tr>
-	<td><b>Password</b></td>
-	<td><input type="password" name="adPwd" required/></td>
+	<td>Password</td>
+	<td><input type="password" name="pass" /></td>
 </tr>
 <tr>
-	<td colspan="2"><button type="submit" name="action" value="adsignup">SignUp</button></td>
+	<td>address</td>
+	<td><input type="text" name="address" /></td>
+</tr>
+<tr>
+	<td>age</td>
+	<td><input type="number" name="age" /></td>
+</tr>
+<tr>
+	<td>Mobile Number</td>
+	<td><input type="number" name="number" /></td>
+</tr>
+<
+<tr>
+	<td colspan="2"><input type="submit" name="action" value="signup" /></td>
 </tr>
 </table>
 </form>

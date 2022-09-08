@@ -62,6 +62,26 @@ this.quantity = quantity;
 this.rate = rate;
 }
 
+public Item(int itemId2, String itemName2, int rate2, String category2, String brand2, String file2) {
+	// TODO Auto-generated constructor stub
+	this.itemId=itemId2;
+	this.itemName=itemName2;
+	this.rate=rate2;
+	this.category=category2;
+	this.brand=brand2;
+	this.file=file2;
+}
+
+public Item() {
+	// TODO Auto-generated constructor stub
+}
+
+public Item(int id, String itemName2) {
+	// TODO Auto-generated constructor stub
+	this.itemId=id;
+	this.itemName=itemName2;
+}
+
 public String getItemName() {
 return itemName;
 }

@@ -27,10 +27,10 @@ public Item viewItem(int id)
 idb=new IitemDaoIMPL();
 return idb.viewItem(id);
 }
-public boolean addItem(int id,int quantiy,User user)
+public boolean addItem(int id,int quantiy,String mail)
 {
 vdb=new InvoiceDaoIMPL();
-return vdb.addItem(id, quantiy,user);
+return vdb.addItem(id, quantiy,mail);
 }
 public boolean addQuantity(int id,int quantiy,User user)
 {
