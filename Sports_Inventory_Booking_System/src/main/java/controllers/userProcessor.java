@@ -79,9 +79,10 @@ public class userProcessor extends HttpServlet {
             break;
 		case "viewCart":
 
-		case "signOut":
+		case "logout":
+			sn.removeAttribute("user");
 			sn.invalidate();
-			target="index.html";
+			target="index.jsp";
 			break;
 		}
 		RequestDispatcher rd=request.getRequestDispatcher(target);

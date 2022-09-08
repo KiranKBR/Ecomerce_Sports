@@ -25,14 +25,7 @@ public class AdminProcessor extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
 	public static int iId=7;
-    public AdminProcessor() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		String action=request.getParameter("action");
@@ -106,7 +99,8 @@ public class AdminProcessor extends HttpServlet {
 				target="removeUser.jsp";
 			}
 			break;
-		case "signout":
+		case "logout":
+			
 			sn.invalidate();
 			target="index.html";
 			break;

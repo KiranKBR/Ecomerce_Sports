@@ -13,7 +13,7 @@
       
    
     <li class="nav-item"><a class="nav-link" href="">Orders</a></li>
-	<li class="nav-item"><a class="nav-link" href="logout.jsp">Logout</a></li> 
+	<li class="nav-item"><a class="nav-link" href="UserProcessor?action=logout">Logout</a></li> 
       <li class="nav-item">
         <a class="nav-link " href="login.jsp">Profile</a>
       </li>
