@@ -49,11 +49,9 @@ public class AdminProcessor extends HttpServlet {
 			
 			if(email.equals("kirankummari77@gmail.com") && psw.equals("NoPassword")) {
 				sn.setAttribute("role", "admin");
-				target="AdminMenu.jsp";
+				target="adminhome.jsp";
 			}
-			else {
-				target="failed.jsp";
-			}
+			
 			break;
 		case "viewItems":
 			ArrayList<Item> Ilist=service.viewAllItems();
@@ -72,15 +70,11 @@ public class AdminProcessor extends HttpServlet {
 			target="addItem.jsp";
 			break;
 		case "removeItem":
-			bId=Integer.parseInt(request.getParameter("bId"));
-			if(service.removeItem(bId)) {
-				target="removeItem.jsp";
-				request.setAttribute("flag",1);
-			}
-			else {
-				request.setAttribute("flag",0);
-				target="removeItem.jsp";
-			}
+			bId=Integer.parseInt(request.getParameter("id"));
+			service.removeItem(bId);
+				target="adminhome.jsp";
+
+		
 			break;
 		case "searchCategory":
 			String bCategory=request.getParameter("category");
