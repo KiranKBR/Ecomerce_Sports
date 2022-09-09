@@ -195,4 +195,9 @@ public User searchUser() {
 	return null;
 }
 
+public User getUserById(String email) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }

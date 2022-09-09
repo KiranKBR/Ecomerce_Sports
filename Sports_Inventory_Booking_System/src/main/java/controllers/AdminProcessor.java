@@ -41,7 +41,7 @@ public class AdminProcessor extends HttpServlet {
 			String psw=request.getParameter("password");
 			
 			if(email.equals("kirankummari77@gmail.com") && psw.equals("NoPassword")) {
-				sn.setAttribute("role", "admin");
+				sn.setAttribute("user", "admin");
 				target="adminhome.jsp";
 			}
 			
@@ -92,17 +92,14 @@ public class AdminProcessor extends HttpServlet {
 		case "removeUser":
 			String uuId=request.getParameter("emailId");
 			if(service.removeUser(uuId)) {
-				target="removeUser.jsp";
-				request.setAttribute("flag",1);
-			}else {
-				request.setAttribute("flag",0);
-				target="removeUser.jsp";
+				target="users.jsp";
+				
 			}
 			break;
 		case "logout":
 			
 			sn.invalidate();
-			target="index.html";
+			target="index.jsp";
 			break;
 		}
 		RequestDispatcher rd=request.getRequestDispatcher(target);

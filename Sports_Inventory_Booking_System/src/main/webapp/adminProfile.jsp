@@ -1,16 +1,21 @@
+<%
 
+String mail =(String) request.getSession().getAttribute("user");
+if (mail != null) {
+    request.setAttribute("auth", mail);
+}%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
+<title>Profile</title>
 <%@include file="includes/head.jsp"%>
 </head>
 <body >
-	
+	<%@include file="includes/adminnav.jsp"%>
 	<div class="container">
 		<div class="card w-50 mx-auto my-5">
-			<div class="card-header text-center">User Login</div>
+			<div class="card-header text-center">Profile</div>
 			<div class="card-body">
 				<form action="UserProcessor" >
 					<div class="form-group">
@@ -38,9 +43,8 @@
 						<input type="text" name="number" class="form-control" placeholder="Number">
 					</div>
 					<div class="text-center">
-						<button type="submit" class="btn btn-primary" name="action" value="signup">SignUp</button>
+						<button type="submit" class="btn btn-primary" name="action" value="signup">Update</button>
 					</div>
-					<button type="button" id="signup" class="cancelbtn" onclick="location.href='login.jsp'">Have an account?</button>
 				</form>
 			</div>
 		</div>

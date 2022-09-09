@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 
 import dto.Item;
+import dto.Kart;
 
 public interface IItem {
 

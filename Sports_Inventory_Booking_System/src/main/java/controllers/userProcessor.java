@@ -50,7 +50,7 @@ public class userProcessor extends HttpServlet {
 			if(user!=null) {
 				target="home.jsp";
 				sn.setAttribute("user", email);
-				//sn.setAttribute("role", user);
+				//sn.setAttribute("user", user);
 			}else {
 				target="login.jsp";
 			}
@@ -58,7 +58,7 @@ public class userProcessor extends HttpServlet {
 		case "signup":
 			//uId=Integer.parseInt(request.getParameter("uId"));
 			email=request.getParameter("email");
-			pass=request.getParameter("pass");
+			pass=request.getParameter("password");
 			name=request.getParameter("name");
 			address=request.getParameter("address");
 			age=Integer.parseInt(request.getParameter("age"));
@@ -72,13 +72,32 @@ public class userProcessor extends HttpServlet {
 		case "addCart":
             int id = Integer.parseInt(request.getParameter("id"));
             String mail =(String) request.getSession().getAttribute("user");
-            
+            String itemName=request.getParameter("itemName");
             int q=7;
-            service.addItem(id, q,mail );
+            service.addItem(id, q,mail,itemName );
             target="home.jsp";
             break;
-		case "viewCart":
-
+		case "removeItem":
+            int id1 = Integer.parseInt(request.getParameter("id"));
+            String mail1 =(String) request.getSession().getAttribute("user");
+            System.out.println(mail1);
+            System.out.println(id1);
+            service.removeItem(id1, mail1);
+            target="kart.jsp";
+            System.out.println(id1);
+            break;
+		case "inc":
+			int id2=Integer.parseInt(request.getParameter("id"));
+			String mail2=(String) request.getSession().getAttribute("user");
+			//int q2=(int)request.getAttribute("quantityy");
+			System.out.println(id2+" "+mail2);
+			service.incrQuantity(id2,mail2,7);
+			target="kart.jsp";
+			break;
+			
+		case "dec":
+			target="kart.jsp";
+			break;
 		case "logout":
 			sn.removeAttribute("user");
 			sn.invalidate();

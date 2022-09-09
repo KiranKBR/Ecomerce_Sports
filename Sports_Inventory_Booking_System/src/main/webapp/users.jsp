@@ -7,8 +7,8 @@ String mail = (String) request.getSession().getAttribute("user");
 if (mail != null) {
     request.setAttribute("auth",mail);
 }
-userService us=new userService();
-ArrayList<Kart> kart_list=us.viewKart(mail);
+adminService as=new adminService();
+ArrayList<User> kart_list=as.viewAllUsers();
 
 %>
 
@@ -31,15 +31,16 @@ font-size: 25px;
 </style>
 </head>
 <body >
-<%@include file="includes/navbar.jsp"%>
+<%@include file="includes/adminnav.jsp"%>
 <div class="container my-3">
 		<div class="d-flex py-3"><h3>Total Price: $ ${(total>0)?dcf.format(total):0} </h3> <a class="mx-3 btn btn-primary" href="cart-check-out">Check Out</a></div>
 		<table class="table table-light">
 			<thead>
 				<tr>
 					<th scope="col">Name</th>
-					<th scope="col">Price</th>
-					<th scope="col">Buy Now</th>
+					<th scope="col">Email</th>
+					<th scope="col">Phone Number</th>
+					<th scope="col">View</th>
 					<th scope="col">Cancel</th>
 				</tr>
 			</thead>
@@ -47,23 +48,20 @@ font-size: 25px;
 				
 						<%
 				if (kart_list != null) {
-					for (Kart c : kart_list) {
+					for (User c : kart_list) {
 				%>
 				<tr>
-					<td><%=c.getItemName()%></td>
-					<td><%=c.getPriceKart() %></td>
+					<td><%=c.getUserName()%></td>
+					<td><%=c.getEmailId()%></td>
+					<td><%=c.getPhoneNumber() %></td>
 					<td>
-					<form action="UserProcessor" method="get" class="form-inline">
-						<input type="hidden" name="id" value="<%= c.getItemId()%>" class="form-input">
-							<div class="form-group d-flex justify-content-between">
-								<a class="btn bnt-sm btn-incre" href="UserProcessor?action=inc&id=<%=c.getItemId()%>&quantityy=<%=c.getQuaKart()%>"><i class="fas fa-plus-square"></i></a> 
-								<input type="text" name="quantity" class="form-control"  value="<%=c.getQuaKart()%>" readonly> 
-								<a class="btn btn-sm btn-decre" href="UserProcessor?action=dec&id=<%=c.getItemId()%>&quantityy=<%=c.getQuaKart()%>"><i class="fas fa-minus-square"></i></a>
-							</div>
+						<form action="AdminProcessor" method="post" class="form-inline">
+						<input type="hidden" name="id" value="<%= c.getEmailId()%>" class="form-input">
+							
 							<button type="submit" class="btn btn-primary btn-sm">Buy</button>
 						</form>
 					</td>
-					<td><a href="UserProcessor?action=removeItem&id=<%=c.getItemId() %>" class="btn btn-sm btn-danger">Remove</a></td>
+					<td><a href="AdminProcessor?action=removeUser&emailId=<%=c.getEmailId() %>" class="btn btn-sm btn-danger">Remove</a></td>
 				</tr>
 
 				<%

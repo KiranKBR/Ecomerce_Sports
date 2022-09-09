@@ -1,13 +1,31 @@
 package dto;
 
 public class Kart extends Item{
-	
+	private int invoiceId;
 	private int quaKart;
 	private int priceKart;
+	private String mail;
 	
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
 	public Kart() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Kart(int invoiceId,int itemId,String itemName,String email,int quantity,int price)
+	{
+		super(itemId,itemName);
+		this.invoiceId=invoiceId;
+		this.mail=email;
+		this.quaKart=quantity;
+		this.priceKart=price;
 	}
 	
 	public Kart(int itemId, String itemName, int rate, String category, String brand,int priceKart,String file) {
@@ -25,6 +43,13 @@ public class Kart extends Item{
 		this.priceKart=price;
 	}
 
+	public Kart(int id, String itemName,String mail, int karQuan, int price) {
+		// TODO Auto-generated constructor stub
+		super(id,itemName);
+		this.mail=mail;
+		this.quaKart=karQuan;
+		this.priceKart=price;
+	}
 	public String getCategory() {
 		return category;
 	}

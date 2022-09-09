@@ -20,7 +20,7 @@ ArrayList<Item> products =us.viewAllItems();
 <%@include file="includes/head.jsp"%>
 </head>
 <body >
-<%@include file="includes/navbar.jsp"%>
+<%@include file="includes/adminnav.jsp"%>
 
 <div class="container">
 		<div class="card-header my-3">All Products</div>

@@ -103,7 +103,25 @@ e.printStackTrace();
 }
 return null;
 }
-
+public int getItemPrice(int id)
+{
+    Connection con=DbConnection.getConnection();
+	String cmd="select price from item where itemId=?";
+	PreparedStatement ps;
+	try {
+		ps = con.prepareStatement(cmd);
+	
+	ps.setInt(1, id);
+    rs = ps.executeQuery();
+    while (rs.next()) {
+       return rs.getInt(1);
+    }
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    return 0;
+}
 
 public int getTotalCartPrice(ArrayList<Kart> cartList) {
     int sum = 0;
@@ -188,9 +206,9 @@ public boolean changeRate(int id,int rate)
 	}
 	return false;
 }
-public double changeQuantityBuy(int id,int quantity)
+public int changeQuantityBuy(int id,int quantity)
 {
-double price=0;
+int price=0;
 try
 {
 Connection con=DbConnection.getConnection();
@@ -202,7 +220,7 @@ int q=0;
 ResultSet res=ps2.executeQuery();
 while(res.next()) {
 q=res.getInt(1);
-price=res.getDouble(2)*quantity;
+price=res.getInt(2)*quantity;
 }
 
 String cmd1="update item set quantity=? where itemId=?";

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.Item;
+import dto.Kart;
 import dto.User;
 import util.DbConnection;
 
@@ -14,22 +15,22 @@ public class InvoiceDaoIMPL implements Iinvoice{
 static int iid=1;
 IitemDaoIMPL itt=new IitemDaoIMPL();
 @Override
-public boolean addItem(int i,int quantity,String mail) {
+public boolean addItem(int i,int quantity,String mail,String itemName) {
 // TODO Auto-generated method stub
 
 try
 {
-double price=itt.changeQuantityBuy(i, quantity);
+int price=itt.changeQuantityBuy(i, quantity);
 Connection con=DbConnection.getConnection();
 
-String cmd="INSERT INTO kart(invoiceId,itemId,emailId,quantiy,price) VALUES(?,?,?,?,?)";
+String cmd="INSERT INTO kart VALUES(?,?,?,?,?,?)";
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setInt(1,-1);
 ps.setInt(2,i);
-ps.setInt(4,quantity);
-
-ps.setDouble(5, price);
-ps.setString(3, mail); //ps.setString(2, i.getItemName());
+ps.setString(4,mail);
+ps.setInt(6,price);
+ps.setInt(5, quantity);
+ps.setString(3, itemName); //ps.setString(2, i.getItemName());
 //ps.setInt(3, i.getQuantity());
 //ps.setDouble(4,i.getRate());
 ps.executeUpdate();
@@ -48,47 +49,31 @@ return false;
 }
 
 @Override
-public ArrayList<Item> getItems(User user) {
+public ArrayList<Kart> getItems(String mail) {
 // TODO Auto-generated method stub
 try
 {
-ArrayList<Integer> cartIntList=new ArrayList<Integer>();
+ArrayList<Kart> cartItemList=new ArrayList<Kart>();
 Connection con=DbConnection.getConnection();
-String cmd="SELECT itemId FROM Kart where invoiceId=?";
+String cmd="SELECT  * from kart where invoiceId=? and emailId=?";
 
 PreparedStatement ps=con.prepareStatement(cmd);
-ps.setInt(1, iid);
+ps.setInt(1, -1);
+ps.setString(2, mail);
 ResultSet res=ps.executeQuery();
 while(res.next())
 {
+
 int id=res.getInt(1);
-//String itemName=res.getString(2);
-//int quantity=res.getInt(3);
-//double price=res.getDouble(4);
-//Item l=new Item(itemName,id,quantity,price);
-cartIntList.add(id);
+int itemId=res.getInt(2);
+String itemName=res.getString(3);
+String email=res.getString(4);
+int q=res.getInt(5);
+int price=res.getInt(6);
+cartItemList.add(new Kart(id,itemId,itemName,email,q,price));
 }
 
-System.out.println(cartIntList);
-ArrayList<Item> cartItemList=new ArrayList<Item>();
-//Connection con=DbConnection.getConnection();
-for(int i:cartIntList) {
-String cmd2="SELECT * FROM item where itemId=?";
 
-PreparedStatement ps2=con.prepareStatement(cmd2);
-ps2.setInt(1, i);
-ResultSet res1=ps2.executeQuery();
-while(res1.next())
-{
-int id=res1.getInt(1);
-String itemName=res1.getString(2);
-int quantity=res1.getInt(3);
-int price=res1.getInt(4);
-Item l=new Item(itemName,i,quantity,price);
-System.out.println(i);
-cartItemList.add(l);
-}
-}
 return cartItemList;
 }
 catch(Exception e)
@@ -100,34 +85,25 @@ return null;
 }
 
 @Override
-public boolean removeItem(int id,User user) {
+public boolean removeItem(int id,String mail) {
 // TODO Auto-generated method stub
 
 
 try {
 Connection con=DbConnection.getConnection();
-String cmd1="select quantity from kart where itemId=?";
-int quantity=0;
-PreparedStatement ps2=con.prepareStatement(cmd1);
-ps2.setInt(1, id);
-ResultSet res1=ps2.executeQuery();
-///String itemName=res1.getString(2);
-while(res1.next()) {
-quantity=res1.getInt(1);
-}
-//double price=res1.getDouble(4);
 
 
 
 
 
-String cmd="delete from kart where itemId=?";
+String cmd="delete from kart where itemId=? and emailId=?";
 
 PreparedStatement ps;
 
 ps = con.prepareStatement(cmd);
 ps.setInt(1, id);
-ps.executeQuery();
+ps.setString(2, mail);
+ps.executeUpdate();
 return true;
 } catch (SQLException e) {
 // TODO Auto-generated catch block
@@ -141,6 +117,7 @@ public boolean buy(User user) {
 // TODO Auto-generated method stub
 return false;
 }
+
 
 @Override
 public boolean updateQuantity(int i,int q,User user) {
@@ -205,6 +182,39 @@ return false;
 public boolean addItem(int i, int quantity, User user) {
 	// TODO Auto-generated method stub
 	return false;
+}
+
+@Override
+public ArrayList<Item> getItems(User user) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public boolean addItem(int i, int quantity, String mail) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+public boolean incQuantity(int id2, String mail2,int q) {
+	// TODO Auto-generated method stub
+	Connection con=DbConnection.getConnection();
+	String cmd="UPDATE kart SET quantiy=? WHERE itemId=? and emailId=?";
+	PreparedStatement ps;
+	try {
+		int s=q+1;
+		ps = con.prepareStatement(cmd);
+		ps.setInt(1,s);
+		ps.setInt(2, id2);
+		ps.setString(3, mail2);
+		ps.executeUpdate();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	return true;
+	
 }
 
 }

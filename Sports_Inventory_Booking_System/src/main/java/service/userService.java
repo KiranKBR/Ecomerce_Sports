@@ -7,6 +7,7 @@ import dao.ILoginDaoIMPL;
 import dao.IitemDaoIMPL;
 import dao.InvoiceDaoIMPL;
 import dto.Item;
+import dto.Kart;
 import dto.User;
 
 public class userService {
@@ -15,6 +16,12 @@ Scanner scan =new Scanner(System.in);
 IitemDaoIMPL idb;
 ILoginDaoIMPL udb;
 InvoiceDaoIMPL vdb;
+
+public User getUserById(String email)
+{
+	udb=new ILoginDaoIMPL();
+	return udb.searchUser(email);
+}
 
 public ArrayList<Item> viewAllItems()
 {
@@ -27,10 +34,10 @@ public Item viewItem(int id)
 idb=new IitemDaoIMPL();
 return idb.viewItem(id);
 }
-public boolean addItem(int id,int quantiy,String mail)
+public boolean addItem(int id,int quantiy,String mail,String itemName)
 {
 vdb=new InvoiceDaoIMPL();
-return vdb.addItem(id, quantiy,mail);
+return vdb.addItem(id, quantiy,mail,itemName);
 }
 public boolean addQuantity(int id,int quantiy,User user)
 {
@@ -42,16 +49,16 @@ public boolean removeQuantity(int id,int quantiy,User user)
 vdb=new InvoiceDaoIMPL();
 return vdb.removeQuantity(id, quantiy,user);
 }
-public boolean removeItem(int id,User user)
+public boolean removeItem(int id,String mail)
 {
 vdb=new InvoiceDaoIMPL();
-return vdb.removeItem(id,user);
+return vdb.removeItem(id,mail);
 }
 
-public ArrayList<Item> viewKart(User user)
+public ArrayList<Kart> viewKart(String mail)
 {
 vdb=new InvoiceDaoIMPL();
-return vdb.getItems(user);
+return vdb.getItems(mail);
 }
 
 public boolean Buy(User user)
@@ -64,6 +71,13 @@ public boolean updatePass(User l)
 {
 udb=new ILoginDaoIMPL();
 return udb.updatePass(l);
+}
+
+public void incrQuantity(int id2, String mail2,int q) {
+	vdb=new InvoiceDaoIMPL();
+ vdb.incQuantity(id2,mail2,q);
+	// TODO Auto-generated method stub
+	
 }
 
 
