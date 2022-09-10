@@ -14,6 +14,14 @@ public class Kart extends Item{
 		this.mail = mail;
 	}
 
+	public int getInvoiceId() {
+		return invoiceId;
+	}
+
+	public void setInvoiceId(int invoiceId) {
+		this.invoiceId = invoiceId;
+	}
+
 	public Kart() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -19,7 +19,7 @@ public class IitemDaoIMPL implements IItem{
 public boolean addItem(Item i)
 {
 			try
-			{
+			{		
 					Connection con=DbConnection.getConnection();
 					String cmd="INSERT INTO item VALUES(?,?,?,?,?,?,?,?)";
 					PreparedStatement ps=con.prepareStatement(cmd);
@@ -298,6 +298,46 @@ public ArrayList<Item> getItemsByCategory(String category)
 		e.printStackTrace();
 	}
 	return null;
+}
+
+public String getItemName(int id) {
+	// TODO Auto-generated method stub
+    Connection con=DbConnection.getConnection();
+	String cmd="select itemName from item where itemId=?";
+	PreparedStatement ps;
+	try {
+		ps = con.prepareStatement(cmd);
+	
+	ps.setInt(1, id);
+    rs = ps.executeQuery();
+    while (rs.next()) {
+       return rs.getString(1);
+    }
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+   
+	return null;
+}
+
+public int getLastId() {
+	// TODO Auto-generated method stub
+	Connection con=DbConnection.getConnection();
+	query="select itemId from item order by itemId DESC LIMIT 1";
+	try {
+		pst=con.prepareStatement(query);
+		rs=pst.executeQuery();
+		while(rs.next())
+		{
+			return rs.getInt(1);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return 0;
 }
 
 

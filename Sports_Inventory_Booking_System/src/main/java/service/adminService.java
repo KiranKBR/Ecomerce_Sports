@@ -78,6 +78,13 @@ public ArrayList<Item> searchByCategory(String category){
 	return idb.getItemsByCategory(category);
 }
 
+public int getLastId() {
+	// TODO Auto-generated method stub
+	idb=new IitemDaoIMPL();
+	return idb.getLastId();
+	
+}
+
 
 
 

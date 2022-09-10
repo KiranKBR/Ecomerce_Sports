@@ -3,12 +3,9 @@
 <%@page import="dao.*"%>
 <%@page import="service.*"%>
 <%
-String mail = (String) request.getSession().getAttribute("user");
-if (mail != null) {
-    request.setAttribute("auth",mail);
-}
-userService us=new userService();
-ArrayList<Kart> kart_list=us.viewKart(mail);
+ArrayList<Kart> kart_list = (ArrayList<Kart>)session.getAttribute("kart_list");
+
+
 
 %>
 
@@ -33,7 +30,8 @@ font-size: 25px;
 <body >
 <%@include file="includes/navbar.jsp"%>
 <div class="container my-3">
-		<div class="d-flex py-3"><h3>Total Price: $ ${(total>0)?dcf.format(total):0} </h3> <a class="mx-3 btn btn-primary" href="cart-check-out">Check Out</a></div>
+		<div class="d-flex py-3"><h3>Total Price: $ ${(total>0)?dcf.format(total):0} </h3> 
+		<a class="mx-3 btn btn-primary" href="UserProcessor?action=checkout">Check Out</a></div>
 		<table class="table table-light">
 			<thead>
 				<tr>
@@ -56,11 +54,13 @@ font-size: 25px;
 					<form action="UserProcessor" method="get" class="form-inline">
 						<input type="hidden" name="id" value="<%= c.getItemId()%>" class="form-input">
 							<div class="form-group d-flex justify-content-between">
-								<a class="btn bnt-sm btn-incre" href="UserProcessor?action=inc&id=<%=c.getItemId()%>&quantityy=<%=c.getQuaKart()%>"><i class="fas fa-plus-square"></i></a> 
-								<input type="text" name="quantity" class="form-control"  value="<%=c.getQuaKart()%>" readonly> 
-								<a class="btn btn-sm btn-decre" href="UserProcessor?action=dec&id=<%=c.getItemId()%>&quantityy=<%=c.getQuaKart()%>"><i class="fas fa-minus-square"></i></a>
+								<a class="btn btn-sm btn-decre" href="UserProcessor?action=dec&id=<%=c.getItemId()%>"><i class="fas fa-minus-square"></i></a>
+							
+								<input type="text" name="quantity" class="form-control"  value="<%=c.getQuaKart()%>" readonly>
+								<a class="btn bnt-sm btn-incre" href="UserProcessor?action=inc&id=<%=c.getItemId()%>"><i class="fas fa-plus-square"></i></a> 
+								 
 							</div>
-							<button type="submit" class="btn btn-primary btn-sm">Buy</button>
+							<button type="submit" class="btn btn-primary btn-sm"  name="action" value="buyfromkart">Buy</button>
 						</form>
 					</td>
 					<td><a href="UserProcessor?action=removeItem&id=<%=c.getItemId() %>" class="btn btn-sm btn-danger">Remove</a></td>

@@ -34,6 +34,17 @@ public void setBrand(String brand) {
 	this.brand = brand;
 }
 
+public Item( String itemName, int quantity, int rate, String category, String subCategory, String brand,String file) {
+	super();
+	this.itemName = itemName;
+	
+	this.quantity = quantity;
+	this.rate = rate;
+	this.category = category;
+	this.subCategory = subCategory;
+	this.brand = brand;
+	this.file=file;
+}
 public Item( int itemId,String itemName, int quantity, int rate, String category, String subCategory, String brand,String file) {
 	super();
 	this.itemName = itemName;

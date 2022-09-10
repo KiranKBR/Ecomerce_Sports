@@ -16,5 +16,6 @@ public boolean buy(User user);
 boolean addItem(int i, int quantity, String mail);
 ArrayList<Kart> getItems(String mail);
 boolean addItem(int i, int quantity, String mail, String itemName);
+boolean addItem(Kart gk);
 
 }

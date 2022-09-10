@@ -52,6 +52,7 @@ public class AdminProcessor extends HttpServlet {
 			target="item.jsp";
 			break;
 		case "addItem":
+			int id=service.getLastId();
 			String itemName=request.getParameter("iName");
 			int quantity=Integer.parseInt(request.getParameter("quantity"));
 			int price=Integer.parseInt(request.getParameter("iPrice"));
@@ -59,7 +60,7 @@ public class AdminProcessor extends HttpServlet {
 			String subCategory=request.getParameter("subCategory");
 			String brand=request.getParameter("brand");
 			String file=request.getParameter("image");
-			service.addItem(iId++, itemName, quantity, price, category, subCategory, brand, file);
+			service.addItem(id+1, itemName, quantity, price, category, subCategory, brand, file);
 			target="addItem.jsp";
 			break;
 		case "removeItem":

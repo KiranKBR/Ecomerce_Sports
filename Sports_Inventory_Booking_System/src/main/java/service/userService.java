@@ -8,6 +8,7 @@ import dao.IitemDaoIMPL;
 import dao.InvoiceDaoIMPL;
 import dto.Item;
 import dto.Kart;
+import dto.Orders;
 import dto.User;
 
 public class userService {
@@ -34,10 +35,15 @@ public Item viewItem(int id)
 idb=new IitemDaoIMPL();
 return idb.viewItem(id);
 }
-public boolean addItem(int id,int quantiy,String mail,String itemName)
+public int getItemPrice(int id)
+{
+	idb=new IitemDaoIMPL();
+	return idb.getItemPrice(id);
+}
+public boolean addItem(Kart gk)
 {
 vdb=new InvoiceDaoIMPL();
-return vdb.addItem(id, quantiy,mail,itemName);
+return vdb.addItem(gk);
 }
 public boolean addQuantity(int id,int quantiy,User user)
 {
@@ -78,6 +84,49 @@ public void incrQuantity(int id2, String mail2,int q) {
  vdb.incQuantity(id2,mail2,q);
 	// TODO Auto-generated method stub
 	
+}
+
+public String getItemName(int id) {
+	// TODO Auto-generated method stub
+	idb=new IitemDaoIMPL();
+	return idb.getItemName(id);
+	
+}
+
+public ArrayList<Orders> viewOrders(String mail) {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.getOrders(mail);
+}
+
+public int getLastOrderId() {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.getLastOrderId();
+}
+
+public boolean buy(Orders ord) {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.buy(ord);
+}
+
+public ArrayList<Kart> viewOrderDetails(int oid2, String mail) {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.viewOrderDetails(oid2,mail);
+}
+
+public boolean buyKart(String mail,int oid) {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.buyKart(mail,oid);
+}
+
+public boolean buyfk(Orders ord,int name) {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.buyfk(ord,name);
 }
 
 

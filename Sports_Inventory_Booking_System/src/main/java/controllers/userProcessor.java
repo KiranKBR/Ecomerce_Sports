@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Item;
+import dto.Kart;
+import dto.Orders;
 import dto.User;
 import service.LoginService;
 import service.userService;
@@ -35,6 +37,9 @@ public class userProcessor extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		String action=request.getParameter("action");
+		ArrayList<Kart> kart_list = null;
+		ArrayList<Kart> kart_list1 = null;
+		ArrayList<Orders> order_list = null;
 		String target="";
 		LoginService lservice= new LoginService();
 		userService service=new userService();
@@ -51,10 +56,18 @@ public class userProcessor extends HttpServlet {
 				target="home.jsp";
 				sn.setAttribute("user", email);
 				//sn.setAttribute("user", user);
+				
+				order_list=service.viewOrders(user.getEmailId());
+				System.out.println(order_list);
+				 kart_list=service.viewKart(user.getEmailId());
+				sn.setAttribute("kart_list", kart_list);
+				sn.setAttribute("order_list", order_list);
 			}else {
 				target="login.jsp";
 			}
 			break;
+			
+		
 		case "signup":
 			//uId=Integer.parseInt(request.getParameter("uId"));
 			email=request.getParameter("email");
@@ -71,31 +84,152 @@ public class userProcessor extends HttpServlet {
 		
 		case "addCart":
             int id = Integer.parseInt(request.getParameter("id"));
+            String itemName=service.getItemName(id);
+
+            kart_list = (ArrayList<Kart>)sn.getAttribute("kart_list");
             String mail =(String) request.getSession().getAttribute("user");
-            String itemName=request.getParameter("itemName");
-            int q=7;
-            service.addItem(id, q,mail,itemName );
+            int flag=0;
+            for (Kart c : kart_list) {
+				if (c.getItemId() == id) {
+					int quantity = c.getQuaKart();
+					quantity++;
+					c.setQuaKart(quantity);
+					service.incrQuantity(id, mail, quantity);
+					
+					 flag=1;
+					 target="home.jsp";
+					 break;
+				}
+			}
+           if(flag==1)
+           {
+        	   System.out.print(kart_list);
+        	   target="home.jsp";
+        	   break;
+           }
+           
+            int price=service.getItemPrice(id);
+            
+            Kart gk=new Kart(-1,id,itemName,mail,1,price);
+            
+            kart_list.add(gk);
+            service.addItem(gk);
+            sn.setAttribute("kart_list", kart_list);
             target="home.jsp";
             break;
 		case "removeItem":
             int id1 = Integer.parseInt(request.getParameter("id"));
             String mail1 =(String) request.getSession().getAttribute("user");
+           // String itemName2=service.getItemName(id1);
+			kart_list = (ArrayList<Kart>)sn.getAttribute("kart_list");
             System.out.println(mail1);
             System.out.println(id1);
+            for (Kart c : kart_list) {
+				if (c.getItemId() == id1) {
+					kart_list.remove(kart_list.indexOf(c));
+					break;
+				}
+			}
             service.removeItem(id1, mail1);
             target="kart.jsp";
             System.out.println(id1);
             break;
+		case "checkout":
+			kart_list = (ArrayList<Kart>)sn.getAttribute("kart_list");
+			int oid=service.getLastOrderId();
+			String mail4 =(String) request.getSession().getAttribute("user");
+			if(kart_list!=null)
+			{
+				service.buyKart(mail4,oid);
+				kart_list.clear();
+				order_list=service.viewOrders(mail4);
+				sn.setAttribute("kart_list", kart_list);
+				sn.setAttribute("order_list", order_list);
+				
+			}
+			target="kart.jsp";
+			break;
+		case "viewDetails":
+			int oid2 = Integer.parseInt(request.getParameter("id"));
+			//int oid2=service.getLastOrderId();
+			 //int price2=service.getItemPrice(id5);
+			// String itemName4=service.getItemName(id5);
+			 mail=(String) request.getSession().getAttribute("user");
+			 kart_list1=service.viewOrderDetails(oid2,mail);
+			 System.out.println(kart_list1);
+			// Kart gk1=new Kart(oid+1,id4,itemName3,mail,1,price1);
+			// service.addItem(gk1);
+			// Orders ord=new Orders(oid+1,mail,price1,"placed");
+			 
+			 target="home.jsp";
+			 break;
+		case "buyItem":
+			int id4 = Integer.parseInt(request.getParameter("id"));
+			int oid3=service.getLastOrderId();
+			 int price1=service.getItemPrice(id4);
+			 String itemName3=service.getItemName(id4);
+			 mail=(String) request.getSession().getAttribute("user");
+			 Kart gk1=new Kart(oid3+1,id4,itemName3,mail,1,price1);
+			 service.addItem(gk1);
+			 Orders ord=new Orders(oid3+1,mail,price1,"placed");
+			 order_list = (ArrayList<Orders>)sn.getAttribute("order_list");
+			 order_list.add(ord);
+			 service.buy(ord);
+			 target="home.jsp";
+			 break;
+		case "buyfromkart":
+			kart_list = (ArrayList<Kart>)sn.getAttribute("kart_list");
+
+			int id5 = Integer.parseInt(request.getParameter("id"));
+			int oid4=service.getLastOrderId();
+			 int price4=service.getItemPrice(id5);
+			//String itemName4=service.getItemName(id5);
+			 mail=(String) request.getSession().getAttribute("user");
+			 for (Kart c : kart_list) {
+					if (c.getItemId() == id5) {
+						//String itemName4=c.getItemName()
+						kart_list.remove(kart_list.indexOf(c));
+						break;
+					}
+				}
+			 //Kart gk1=new Kart(oid3+1,id4,itemName3,mail,1,price1);
+			 //service.addItem(gk1);
+			 Orders ord4=new Orders(oid4+1,mail,price4,"placed");
+			 order_list = (ArrayList<Orders>)sn.getAttribute("order_list");
+			 order_list.add(ord4);
+			 service.buyfk(ord4,id5);
+			 target="home.jsp";
+			 break;
 		case "inc":
 			int id2=Integer.parseInt(request.getParameter("id"));
 			String mail2=(String) request.getSession().getAttribute("user");
+			kart_list = (ArrayList<Kart>)sn.getAttribute("kart_list");
 			//int q2=(int)request.getAttribute("quantityy");
-			System.out.println(id2+" "+mail2);
-			service.incrQuantity(id2,mail2,7);
+			for (Kart c : kart_list) {
+				if (c.getItemId() == id2) {
+					int quantity = c.getQuaKart();
+					quantity++;
+					c.setQuaKart(quantity);
+					service.incrQuantity(id2, mail2, quantity);
+				}
+			}
 			target="kart.jsp";
 			break;
 			
 		case "dec":
+			int id3=Integer.parseInt(request.getParameter("id"));
+			String mail3=(String) request.getSession().getAttribute("user");
+			kart_list = (ArrayList<Kart>)sn.getAttribute("kart_list");
+			//int q2=(int)request.getAttribute("quantityy");
+			for (Kart c : kart_list) {
+				if (c.getItemId() == id3) {
+					int quantity = c.getQuaKart();
+					quantity--;
+					c.setQuaKart(quantity);
+					service.incrQuantity(id3, mail3, quantity);
+				}
+			}
+			
 			target="kart.jsp";
 			break;
 		case "logout":

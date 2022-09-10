@@ -37,8 +37,8 @@ ArrayList<Item> products =us.viewAllItems();
 						<h6 class="price">Price: $<%=p.getRate() %></h6>
 						<h6 class="category">Brand: <%=p.getBrand() %></h6>
 						<div class="mt-3 d-flex justify-content-between">
-							<a class="btn btn-dark" href="UserProcessor?action=addCart&id=<%=p.getItemId()%>&itemName=<%=p.getItemName()%>">Add to Cart</a> <a
-								class="btn btn-primary" href="order-now?quantity=1&id=<%=p.getItemId()%>">Buy Now</a>
+							<a class="btn btn-dark" href="UserProcessor?action=addCart&id=<%=p.getItemId()%>">Add to Cart</a> <a
+								class="btn btn-primary" href="UserProcessor?action=buyItem&id=<%=p.getItemId()%>">Buy Now</a>
 						</div>
 					</div>
 				</div>
