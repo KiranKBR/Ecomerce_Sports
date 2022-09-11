@@ -5,7 +5,7 @@
 <%
 ArrayList<Kart> kart_list = (ArrayList<Kart>)session.getAttribute("kart_list");
 
-
+int kartPrice=(int)session.getAttribute("KartPrice");
 
 %>
 
@@ -30,7 +30,7 @@ font-size: 25px;
 <body >
 <%@include file="includes/navbar.jsp"%>
 <div class="container my-3">
-		<div class="d-flex py-3"><h3>Total Price: $ ${(total>0)?dcf.format(total):0} </h3> 
+		<div class="d-flex py-3"><h3>Total Price:<%=kartPrice %> </h3> 
 		<a class="mx-3 btn btn-primary" href="UserProcessor?action=checkout">Check Out</a></div>
 		<table class="table table-light">
 			<thead>

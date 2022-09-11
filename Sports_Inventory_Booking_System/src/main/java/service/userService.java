@@ -117,16 +117,27 @@ public ArrayList<Kart> viewOrderDetails(int oid2, String mail) {
 	return vdb.viewOrderDetails(oid2,mail);
 }
 
-public boolean buyKart(String mail,int oid) {
+public boolean buyKart(String mail,int oid,int price) {
 	// TODO Auto-generated method stub
 	vdb=new InvoiceDaoIMPL();
-	return vdb.buyKart(mail,oid);
+	return vdb.buyKart(mail,oid,price);
 }
 
+public int getTotalCartPrice(String mail)
+{
+	vdb=new InvoiceDaoIMPL();
+	return vdb.getTotalCartPrice(mail);
+}
 public boolean buyfk(Orders ord,int name) {
 	// TODO Auto-generated method stub
 	vdb=new InvoiceDaoIMPL();
 	return vdb.buyfk(ord,name);
+}
+
+public boolean changeQuantityBuy(int id,int quantity)
+{
+	idb=new IitemDaoIMPL();
+	return changeQuantityBuy(id,quantity);
 }
 
 

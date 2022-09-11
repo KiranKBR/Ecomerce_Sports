@@ -33,7 +33,7 @@ public boolean addItem(Kart gk) {
 
 try
 {
-int price=itt.changeQuantityBuy(gk.getItemId(), gk.getQuaKart());
+
 Connection con=DbConnection.getConnection();
 
 String cmd="INSERT INTO kart VALUES(?,?,?,?,?,?)";
@@ -136,7 +136,7 @@ return false;
 @Override
 public boolean updateQuantity(int i,int q,User user) {
 // TODO Auto-generated method stub
-double price=itt.changeQuantityBuy(i, q);
+
 Connection con=DbConnection.getConnection();
 String cmd="update kart set quantity=?,tprice=? where itemId=? and email=?";
 
@@ -213,14 +213,16 @@ public boolean addItem(int i, int quantity, String mail) {
 public boolean incQuantity(int id2, String mail2,int q) {
 	// TODO Auto-generated method stub
 	Connection con=DbConnection.getConnection();
-	String cmd="UPDATE kart SET quantiy=? WHERE itemId=? and emailId=?";
+	String cmd="UPDATE kart SET quantiy=?,price=? WHERE itemId=? and emailId=? and invoiceId=?";
 	PreparedStatement ps;
 	try {
-		
+		int price=itt.getItemPrice(id2);
 		ps = con.prepareStatement(cmd);
 		ps.setInt(1,q);
-		ps.setInt(2, id2);
-		ps.setString(3, mail2);
+		ps.setInt(2, price*q);
+		ps.setString(4, mail2);
+		ps.setInt(3, id2);
+		ps.setInt(5, -1);
 		ps.executeUpdate();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -362,7 +364,7 @@ public ArrayList<Kart> viewOrderDetails(int oid2, String mail) {
 
 
 
-public boolean buyKart(String mail,int oid) {
+public boolean buyKart(String mail,int oid,int price) {
 	
 	Connection con=DbConnection.getConnection();
 	String cmd="UPDATE kart SET invoiceId=? WHERE invoiceId=-1 and emailId=?";
@@ -375,7 +377,7 @@ public boolean buyKart(String mail,int oid) {
 		ps.setString(2, mail);
 		ps.executeUpdate();
 		
-		Orders o=new Orders(oid+1,mail,700,"placed");
+		Orders o=new Orders(oid+1,mail,price,"placed");
 		buy(o);
 		return true;
 	} catch (SQLException e) {
@@ -410,7 +412,7 @@ ps.setInt(3, id);
 //ps.setInt(3, i.getQuantity());
 //ps.setDouble(4,i.getRate());
 ps.executeUpdate();
-Orders o=new Orders(gk.getInvoiceId(),gk.getEmail(),700,"placed");
+Orders o=new Orders(gk.getInvoiceId(),gk.getEmail(),gk.getPrice(),"placed");
 buy(o);
 
 return true;
@@ -493,5 +495,108 @@ public boolean approve(String [] alist) {
 
 	return false;
 }
+
+
+
+public ArrayList<Kart> getKartByInvoice(int itid2) {
+	// TODO Auto-generated method stub
+	try
+	{
+	ArrayList<Kart> cartItemList=new ArrayList<Kart>();
+	Connection con=DbConnection.getConnection();
+	String cmd="SELECT  * from kart where invoiceId=? ";
+
+	PreparedStatement ps=con.prepareStatement(cmd);
+	ps.setInt(1, itid2);
+	
+	ResultSet res=ps.executeQuery();
+	while(res.next())
+	{
+
+	int id=res.getInt(1);
+	int itemId=res.getInt(2);
+	String itemName=res.getString(3);
+	String email=res.getString(4);
+	int q=res.getInt(5);
+	int price=res.getInt(6);
+	cartItemList.add(new Kart(itemId,itemName,email,q,price));
+	}
+
+
+	return cartItemList;
+	}
+	catch(Exception e)
+	{
+	e.printStackTrace();
+	}
+	return null;
+
+}
+
+
+
+public ArrayList<Orders> getApprovedOrders() {
+	// TODO Auto-generated method stub
+	try
+	{
+	ArrayList<Orders> cartItemList=new ArrayList<Orders>();
+	Connection con=DbConnection.getConnection();
+	String cmd="SELECT  * from orders where status=?";
+
+	PreparedStatement ps=con.prepareStatement(cmd);
+	ps.setString(1, "approved");
+	
+	ResultSet res=ps.executeQuery();
+	while(res.next())
+	{
+
+	int id=res.getInt(1);
+	
+	
+	String email=res.getString(2);
+	int q=res.getInt(3);
+	String status=res.getString(4);
+	cartItemList.add(new Orders(id,email,q,status));
+	}
+
+
+	return cartItemList;
+	}
+	catch(Exception e)
+	{
+	e.printStackTrace();
+	}
+	return null;
+}
+
+
+public int getTotalCartPrice(String mail) {
+    int sum = 0;
+    try
+	{
+	Connection con=DbConnection.getConnection();
+	String cmd="SELECT  price from kart where invoiceId=-1 and emailId=? ";
+
+	PreparedStatement ps=con.prepareStatement(cmd);
+	ps.setString(1, mail);
+	
+	ResultSet res=ps.executeQuery();
+	while(res.next())
+	{
+
+	int price=res.getInt(1);
+	sum=sum+price;
+	}
+
+
+	
+	}
+	catch(Exception e)
+	{
+	e.printStackTrace();
+	}
+    return sum;
+}
+
 }
 

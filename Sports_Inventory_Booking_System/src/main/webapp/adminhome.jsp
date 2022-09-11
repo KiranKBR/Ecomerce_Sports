@@ -45,7 +45,7 @@ Item usr=(Item)session.getAttribute("idc");
 					<td><%=c.getItemName()%></td>
 					<td><%=c.getRate() %></td>
 					<td><%=c.getQuantity() %></td>
-					<td><a href="AdminProcessor?action=changeDetails&id=<%=c.getItemId() %>" class="btn btn-sm btn-danger">Modify</a></td>
+					<td><a href="AdminProcessor?action=selectToChange&id=<%=c.getItemId() %>" class="btn btn-sm btn-danger">Modify</a></td>
 				</tr>
 
 				<%
@@ -67,19 +67,19 @@ Item usr=(Item)session.getAttribute("idc");
 					<form action="AdminProcessor" >
 					<div class="form-group">
 						<label>ItemId</label> 
-						<input type="text" name="id" class="form-control" value="<%=usr.getItemId() %> ">
+						<input type="text" name="id2" class="form-control" value="<%=usr.getItemId()%> ">
 					</div>
 					<div class="form-group">
 						<label>Name</label> 
-						<input type="text" name="name" class="form-control" value="<%=usr.getItemName() %> ">
+						<input type="text" name="name" class="form-control" value="<%=usr.getItemName()%> ">
 					</div>
 					<div class="form-group">
 						<label>Brand</label> 
-						<input type="text" name="brand" class="form-control" value="<%=usr.getBrand() %>">
+						<input type="text" name="brand" class="form-control" value="<%=usr.getBrand()%>">
 					</div>
 					<div class="form-group">
 						<label>Quantity</label> 
-						<input type="number" name="quantity" class="form-control" value="<%=usr.getQuantity() %>">
+						<input type="number" name="quantity" class="form-control" value="<%=usr.getQuantity()%>">
 					</div>
 					<div class="form-group">
 						<label>Price</label> 
@@ -87,16 +87,16 @@ Item usr=(Item)session.getAttribute("idc");
 					</div>
 					<div class="form-group">
 						<label>Category</label> 
-						<input type="text" name="category" class="form-control" value="<%=usr.getCategory() %>">
+						<input type="text" name="category" class="form-control" value="<%=usr.getCategory()%>">
 					</div>
 					<div class="form-group">
 						<label>Sub Category</label> 
-						<input type="text" name="subcat" class="form-control" value="<%=usr.getSubCategory() %>">
+						<input type="text" name="subcat" class="form-control" value="<%=usr.getSubCategory()%>">
 					</div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary" name="action" value="changeDetails">Update</button>
 					</div>
-					<a href="AdminProcessor?action=removeItem&id=<%=usr.getItemId() %>" class="btn btn-sm btn-danger">Remove</a>
+					<a href="AdminProcessor?action=removeItem&id3=<%=usr.getItemId()%>" class="btn btn-sm btn-danger">Remove</a>
 				</form>
 				</div>
 				<div>

@@ -3,8 +3,8 @@
 <%@page import="dao.*"%>
 <%@page import="service.*"%>
 <%
-ArrayList<Orders> kart_list = (ArrayList<Orders>)session.getAttribute("order_list");
-ArrayList<Kart> kart_list1 = (ArrayList<Kart>)session.getAttribute("viewDetails");
+ArrayList<Orders> kart_list = (ArrayList<Orders>)session.getAttribute("order_list_approved");
+ArrayList<Kart> kart_list1 = (ArrayList<Kart>)session.getAttribute("viewDetailsapproved");
 
 
 %>
@@ -49,16 +49,14 @@ font-size: 25px;
 <div class="container my-3">
 <div class="row">
 <div class="col-sm-6">
-<form action="AdminProcessor">
-<input type="submit" name="action" value="approve">
-		<table class="table table-light">
+<table class="table table-light">
 			<thead>
 				<tr>
 					<th scope="col">Order ID</th>
 					<th scope="col">Price</th>
 					<th scope="col">UserId</th>
 					<th scope="col">View</th>
-					<th scope="col">   </th>
+					
 					
 					
 				</tr>
@@ -73,9 +71,9 @@ font-size: 25px;
 					<td><%=c.getInvoiceId()%></td>
 					<td><%=c.getPrice() %></td>
 					<td><%=c.getEmail() %></td>
-							<td><a href="AdminProcessor?action=viewOrder&Id=<%=c.getInvoiceId()%>" class="btn btn-sm ">View</a></td>
+							<td><a href="AdminProcessor?action=viewOrderApproved&Id2=<%=c.getInvoiceId()%>" class="btn btn-sm ">View</a></td>
 			
-					<td><input type="checkbox" name="approval" value="<%=c.getInvoiceId() %>"></td>
+		
 					
 				</tr>
 
@@ -84,7 +82,7 @@ font-size: 25px;
 				
 			</tbody>
 		</table>
-		</form>
+		
 		</div>
 		
 		<div class="col-sm">
@@ -107,9 +105,9 @@ font-size: 25px;
 					for (Kart k : kart_list1) {
 				%>
 				<tr>
-					<td><%=k.getItemName()%></td>
-					<td><%=k.getQuaKart() %></td>
-				
+					<td><%=k.getItemId()%></td>
+					<td><%=k.getItemName() %></td>
+				<td><%=k.getQuaKart() %></td>
 				<td><%=k.getPriceKart() %></td>
 				</tr>
 

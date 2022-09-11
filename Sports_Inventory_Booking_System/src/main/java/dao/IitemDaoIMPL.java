@@ -40,7 +40,31 @@ public boolean addItem(Item i)
 			}
 			return false;
 }
-
+public boolean changeDetails(Item i)
+{
+			try
+			{		
+					Connection con=DbConnection.getConnection();
+					String cmd="UPDATE item SET itemId=?,itemName=?,quantity=?,price=?,category=?,subcategory=?,Brand=?,file=? WHERE itemId=?";
+					PreparedStatement ps=con.prepareStatement(cmd);
+					ps.setInt(1, i.getItemId());
+					ps.setString(2, i.getItemName());
+					ps.setInt(3, i.getQuantity());
+					ps.setInt(4,i.getRate());
+					ps.setString(5, i.getCategory());
+					ps.setString(6, i.getSubCategory());
+					ps.setString(7, i.getBrand());
+					ps.setString(8, i.getFile());
+					ps.setInt(9, i.getItemId());
+					ps.executeUpdate();
+					con.close();
+					return true;
+			}catch(Exception e)
+			{
+			e.printStackTrace();
+			}
+			return false;
+}
 public ArrayList<Item> getItems()
 {
 try
@@ -206,13 +230,13 @@ public boolean changeRate(int id,int rate)
 	}
 	return false;
 }
-public int changeQuantityBuy(int id,int quantity)
+public boolean changeQuantityBuy(int id,int quantity)
 {
-int price=0;
+
 try
 {
 Connection con=DbConnection.getConnection();
-String c="select quantity,price from item where itemId=?";
+String c="select quantity from item where itemId=?";
 PreparedStatement ps2=con.prepareStatement(c);
 ps2.setInt(1, id);
 int q=0;
@@ -220,7 +244,6 @@ int q=0;
 ResultSet res=ps2.executeQuery();
 while(res.next()) {
 q=res.getInt(1);
-price=res.getInt(2)*quantity;
 }
 
 String cmd1="update item set quantity=? where itemId=?";
@@ -232,7 +255,7 @@ ps1.executeUpdate();
 {
 e.printStackTrace();
 }
-return price;
+return false;
 }
 
 

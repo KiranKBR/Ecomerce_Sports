@@ -63,6 +63,8 @@ public class userProcessor extends HttpServlet {
 				 kart_list=service.viewKart(user.getEmailId());
 				sn.setAttribute("kart_list", kart_list);
 				sn.setAttribute("order_list", order_list);
+				sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
+				System.out.println(service.getTotalCartPrice(email));
 			}else {
 				target="login.jsp";
 			}
@@ -92,11 +94,14 @@ public class userProcessor extends HttpServlet {
             int flag=0;
             for (Kart c : kart_list) {
 				if (c.getItemId() == id) {
+					
 					int quantity = c.getQuaKart();
 					quantity++;
 					c.setQuaKart(quantity);
+					int price=service.getItemPrice(id);			
+					c.setPriceKart(price*quantity);
 					service.incrQuantity(id, mail, quantity);
-					
+					sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 					 flag=1;
 					 target="home.jsp";
 					 break;
@@ -116,6 +121,7 @@ public class userProcessor extends HttpServlet {
             kart_list.add(gk);
             service.addItem(gk);
             sn.setAttribute("kart_list", kart_list);
+            sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
             target="home.jsp";
             break;
 		case "removeItem":
@@ -132,6 +138,7 @@ public class userProcessor extends HttpServlet {
 				}
 			}
             service.removeItem(id1, mail1);
+            sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
             target="kart.jsp";
             System.out.println(id1);
             break;
@@ -141,12 +148,12 @@ public class userProcessor extends HttpServlet {
 			String mail4 =(String) request.getSession().getAttribute("user");
 			if(kart_list!=null)
 			{
-				service.buyKart(mail4,oid);
+				service.buyKart(mail4,oid,service.getTotalCartPrice(email));
 				kart_list.clear();
 				order_list=service.viewOrders(mail4);
 				sn.setAttribute("kart_list", kart_list);
 				sn.setAttribute("order_list", order_list);
-				
+				sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 			}
 			target="kart.jsp";
 			break;
@@ -177,6 +184,7 @@ public class userProcessor extends HttpServlet {
 			 order_list = (ArrayList<Orders>)sn.getAttribute("order_list");
 			 order_list.add(ord);
 			 service.buy(ord);
+			 sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 			 target="home.jsp";
 			 break;
 		case "buyfromkart":
@@ -184,12 +192,13 @@ public class userProcessor extends HttpServlet {
 
 			int id5 = Integer.parseInt(request.getParameter("id"));
 			int oid4=service.getLastOrderId();
-			 int price4=service.getItemPrice(id5);
+			 int price4=0;
 			//String itemName4=service.getItemName(id5);
 			 mail=(String) request.getSession().getAttribute("user");
 			 for (Kart c : kart_list) {
 					if (c.getItemId() == id5) {
 						//String itemName4=c.getItemName()
+						price4=c.getPriceKart();
 						kart_list.remove(kart_list.indexOf(c));
 						break;
 					}
@@ -200,6 +209,7 @@ public class userProcessor extends HttpServlet {
 			 order_list = (ArrayList<Orders>)sn.getAttribute("order_list");
 			 order_list.add(ord4);
 			 service.buyfk(ord4,id5);
+			 sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 			 target="home.jsp";
 			 break;
 		case "inc":
@@ -211,10 +221,13 @@ public class userProcessor extends HttpServlet {
 				if (c.getItemId() == id2) {
 					int quantity = c.getQuaKart();
 					quantity++;
+					int price5=service.getItemPrice(id2);			
+					c.setPriceKart(price5*quantity);
 					c.setQuaKart(quantity);
 					service.incrQuantity(id2, mail2, quantity);
 				}
 			}
+			sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 			target="kart.jsp";
 			break;
 			
@@ -227,11 +240,13 @@ public class userProcessor extends HttpServlet {
 				if (c.getItemId() == id3) {
 					int quantity = c.getQuaKart();
 					quantity--;
+					int price3=service.getItemPrice(id3);			
+					c.setPriceKart(price3*quantity);
 					c.setQuaKart(quantity);
 					service.incrQuantity(id3, mail3, quantity);
 				}
 			}
-			
+			sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 			target="kart.jsp";
 			break;
 		case "logout":

@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import dto.Kart;
 import dao.ILoginDaoIMPL;
 import dao.IitemDaoIMPL;
 import dao.InvoiceDaoIMPL;
@@ -104,6 +105,24 @@ public boolean approve(String[] alist) {
 	// TODO Auto-generated method stub
 	vdb=new InvoiceDaoIMPL();
 	return vdb.approve(alist);
+}
+
+public ArrayList<Kart> getKartByInvoice(int itid2) {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.getKartByInvoice(itid2);
+}
+
+public ArrayList<Orders> getApprovedOrders() {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.getApprovedOrders();
+}
+
+public boolean changeDetails(Item item) {
+	// TODO Auto-generated method stub
+	idb=new IitemDaoIMPL();
+	return idb.changeDetails(item);
 }
 
 
