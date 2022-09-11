@@ -39,6 +39,7 @@ public class userProcessor extends HttpServlet {
 		String action=request.getParameter("action");
 		ArrayList<Kart> kart_list = null;
 		ArrayList<Kart> kart_list1 = null;
+		ArrayList<Kart> orderkart_list1 = null;
 		ArrayList<Orders> order_list = null;
 		String target="";
 		LoginService lservice= new LoginService();
@@ -156,12 +157,13 @@ public class userProcessor extends HttpServlet {
 			// String itemName4=service.getItemName(id5);
 			 mail=(String) request.getSession().getAttribute("user");
 			 kart_list1=service.viewOrderDetails(oid2,mail);
+			 sn.setAttribute("viewDetails", kart_list1);
 			 System.out.println(kart_list1);
 			// Kart gk1=new Kart(oid+1,id4,itemName3,mail,1,price1);
 			// service.addItem(gk1);
 			// Orders ord=new Orders(oid+1,mail,price1,"placed");
 			 
-			 target="home.jsp";
+			 target="orders.jsp";
 			 break;
 		case "buyItem":
 			int id4 = Integer.parseInt(request.getParameter("id"));

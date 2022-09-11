@@ -12,6 +12,7 @@ if (mail != null) {
 
 userService us = new userService();
 ArrayList<Item> products =us.viewAllItems();
+Item usr=(Item)session.getAttribute("idc");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,38 +22,137 @@ ArrayList<Item> products =us.viewAllItems();
 </head>
 <body >
 <%@include file="includes/adminnav.jsp"%>
+<div class="container my-3">
+<div class="row">
+<div class="col-sm-6">
+		<table class="table table-light">
+			<thead>
+				<tr>
+					<th scope="col"> Name</th>
+					<th scope="col">Price</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Modify</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				
+						<%
+				if (products != null) {
+					for (Item c : products) {
+				%>
+				<tr>
+					<td><%=c.getItemName()%></td>
+					<td><%=c.getRate() %></td>
+					<td><%=c.getQuantity() %></td>
+					<td><a href="AdminProcessor?action=changeDetails&id=<%=c.getItemId() %>" class="btn btn-sm btn-danger">Modify</a></td>
+				</tr>
 
-<div class="container">
-		<div class="card-header my-3">All Products</div>
-		<div class="row">
-			<%
-			if (!products.isEmpty()) {
-				for (Item p : products) {
-			%>
-			<div class="col-md-3 my-3">
-				<div class="card w-100">
-					<img class="card-img-top" src="product-image/<%=p.getFile() %>"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title"><%=p.getItemName() %></h5>
-						<h6 class="price">Price: $<%=p.getRate() %></h6>
-						<h6 class="category">Brand: <%=p.getBrand() %></h6>
-						<div class="mt-3 d-flex justify-content-between">
-							<a class="btn btn-dark" href="AdminProcessor?action=removeItem&id=<%=p.getItemId()%>">Remove Item</a> <a
-								class="btn btn-primary" href="AdminProcessor?changeItemPrice&id=<%=p.getItemId()%>">Change the Cost</a>
-						</div>
+				<%
+				}}%>
+				
+			</tbody>
+		</table>
+		</div>
+		
+		<div class="col-sm">
+		
+		
+		<div class="container">
+		<div class="card mx-auto my-5">
+			
+			<%if(usr!=null){%>
+			<div class="card-header text-center">Change Details</div>
+			<div class="card-body">
+					<form action="AdminProcessor" >
+					<div class="form-group">
+						<label>ItemId</label> 
+						<input type="text" name="id" class="form-control" value="<%=usr.getItemId() %> ">
 					</div>
+					<div class="form-group">
+						<label>Name</label> 
+						<input type="text" name="name" class="form-control" value="<%=usr.getItemName() %> ">
+					</div>
+					<div class="form-group">
+						<label>Brand</label> 
+						<input type="text" name="brand" class="form-control" value="<%=usr.getBrand() %>">
+					</div>
+					<div class="form-group">
+						<label>Quantity</label> 
+						<input type="number" name="quantity" class="form-control" value="<%=usr.getQuantity() %>">
+					</div>
+					<div class="form-group">
+						<label>Price</label> 
+						<input type="number" name="price" class="form-control" value="<%=usr.getRate()%>">
+					</div>
+					<div class="form-group">
+						<label>Category</label> 
+						<input type="text" name="category" class="form-control" value="<%=usr.getCategory() %>">
+					</div>
+					<div class="form-group">
+						<label>Sub Category</label> 
+						<input type="text" name="subcat" class="form-control" value="<%=usr.getSubCategory() %>">
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary" name="action" value="changeDetails">Update</button>
+					</div>
+					<a href="AdminProcessor?action=removeItem&id=<%=usr.getItemId() %>" class="btn btn-sm btn-danger">Remove</a>
+				</form>
 				</div>
+				<div>
+				<% }%> 
+				
+				<%if(usr==null){%> 
+				<div class="card-header text-center">Add Item</div>
+			<div class="card-body">
+									<form action="AdminProcessor" >
+					
+					<div class="form-group">
+						<label>Name</label> 
+						<input type="text" name="name" class="form-control"  ">
+					</div>
+					<div class="form-group">
+						<label>Brand</label> 
+						<input type="text" name="brand" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>Quantity</label> 
+						<input type="number" name="quantity" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>Price</label> 
+						<input type="number" name="price" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>Category</label> 
+						<input type="text" name="category" class="form-control" >
+					</div>
+					<div class="form-group">
+						<label>Sub Category</label> 
+						<input type="text" name="subcat" class="form-control">
+					</div>
+										<div class="form-group">
+						<label>File</label> 
+						<input type="file" name="image" class="form-control">
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary" name="action" value="addItem">Update</button>
+					</div>
+				</form>
+				
+					
 			</div>
-			<%
-			}
-			} else {
-			out.println("There is no proucts");
-			}
-			%>
-
+		</div>
+		<% }%> 
+	</div>
+	
+		</div>
 		</div>
 	</div>
+
+
+
+
 <%@include file="includes/footer.jsp"%>
 </body>
 </html>

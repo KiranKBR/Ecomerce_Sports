@@ -12,7 +12,7 @@
 
 <tr>
 	<td>Item Name:</td>
-	<td><input type="text" name="iName" /></td>
+	<td><input type="text" name="name" /></td>
 </tr>
 <tr>
 	<td>Quantity:</td>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>Price</td>
-	<td><input type="number" name="iPrice" /></td>
+	<td><input type="number" name="price" /></td>
 </tr>
 <tr>
 	<td>Category:</td>
@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>Sub Category:</td>
-	<td><input type="text" name="subCategory" /></td>
+	<td><input type="text" name="subcat" /></td>
 </tr>
 <tr>
 	<td>Brand</td>

@@ -28,17 +28,19 @@ font-size: 25px;
 </style>
 </head>
 <body >
-<%@include file="includes/navbar.jsp"%>
+<%@include file="includes/adminnav.jsp"%>
 <div class="container my-3">
 <div class="row">
 <div class="col-sm-6">
+<form action="AdminProcessor">
+<input type="submit" name="action" value="approve">
 		<table class="table table-light">
 			<thead>
 				<tr>
 					<th scope="col">Order ID</th>
 					<th scope="col">Price</th>
-					<th scope="col">Status</th>
-					<th scope="col">View Items</th>
+					<th scope="col">UserId</th>
+					<th scope="col">   </th>
 					
 				</tr>
 			</thead>
@@ -51,8 +53,9 @@ font-size: 25px;
 				<tr>
 					<td><%=c.getInvoiceId()%></td>
 					<td><%=c.getPrice() %></td>
-					<td><%=c.getStatus() %></td>
-					<td><a href="UserProcessor?action=viewDetails&id=<%=c.getInvoiceId() %>" class="btn btn-sm btn-danger">View</a></td>
+					<td><%=c.getEmail() %></td>
+					<td><input type="checkbox" name="approval" value="<%=c.getInvoiceId() %>"></td>
+					
 				</tr>
 
 				<%
@@ -60,6 +63,7 @@ font-size: 25px;
 				
 			</tbody>
 		</table>
+		</form>
 		</div>
 		
 		<div class="col-sm">

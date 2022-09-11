@@ -12,7 +12,7 @@
       <li class="nav-item"> <a class="nav-link" href="users.jsp">Users</a> </li>
       
    
-    <li class="nav-item"><a class="nav-link" href="">Orders</a></li>
+    <li class="nav-item"><a class="nav-link" href="adminorders.jsp">Orders</a></li>
     <li class="nav-item">
         <a class="nav-link " href="adminProfile.jsp">Profile</a>
       </li>

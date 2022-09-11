@@ -250,10 +250,15 @@ ps.setInt(1, id);
 ResultSet res=ps.executeQuery();
 //int iid=res.getInt(1);
 while(res.next()) {
+	int iid=res.getInt(1);
 String itemName=res.getString(2);
 int quantity=res.getInt(3);
 int price=res.getInt(4);
-Item l=new Item(itemName,id,quantity,price);
+String cat=res.getString(5);
+String subcat=res.getString(6);
+String brand=res.getString(7);
+String file=res.getString(8);
+Item l=new Item(iid,itemName,quantity,price,cat,subcat,brand,file);
 return l;}
 } catch (SQLException e) {
 // TODO Auto-generated catch block

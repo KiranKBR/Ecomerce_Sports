@@ -423,5 +423,75 @@ e.printStackTrace();
 
 return false;
 }
+
+
+
+public ArrayList<Orders> getPlacedOrders() {
+	// TODO Auto-generated method stub
+	try
+	{
+	ArrayList<Orders> cartItemList=new ArrayList<Orders>();
+	Connection con=DbConnection.getConnection();
+	String cmd="SELECT  * from orders where status=?";
+
+	PreparedStatement ps=con.prepareStatement(cmd);
+	ps.setString(1, "placed");
+	
+	ResultSet res=ps.executeQuery();
+	while(res.next())
+	{
+
+	int id=res.getInt(1);
+	
+	
+	String email=res.getString(2);
+	int q=res.getInt(3);
+	String status=res.getString(4);
+	cartItemList.add(new Orders(id,email,q,status));
+	}
+
+
+	return cartItemList;
+	}
+	catch(Exception e)
+	{
+	e.printStackTrace();
+	}
+	return null;
+}
+
+
+
+public boolean approve(String [] alist) {
+	// TODO Auto-generated method stub
+	try
+	{
+
+	Connection con=DbConnection.getConnection();
+	for(String c:alist)
+	{
+	
+	String cmd="UPDATE orders SET status=? WHERE invoiceId=? and status=?";
+	PreparedStatement ps=con.prepareStatement(cmd);
+	ps.setString(1,"approved");
+	ps.setInt(2,Integer.parseInt(c));
+	ps.setString(3,"placed");
+
+	//ps.setString(3, gk.getItemName()); //ps.setString(2, i.getItemName());
+	//ps.setInt(3, i.getQuantity());
+	//ps.setDouble(4,i.getRate());
+	ps.executeUpdate();
+
+	}
+	return true;
+	}catch(Exception e)
+	{
+	e.printStackTrace();
+	}
+
+
+
+	return false;
+}
 }
 

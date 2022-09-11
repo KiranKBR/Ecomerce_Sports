@@ -5,13 +5,16 @@ import java.util.Scanner;
 
 import dao.ILoginDaoIMPL;
 import dao.IitemDaoIMPL;
+import dao.InvoiceDaoIMPL;
 import dto.Item;
+import dto.Orders;
 import dto.User;
 
 public class adminService {
 Scanner scan =new Scanner(System.in);
 IitemDaoIMPL idb;
 ILoginDaoIMPL udb;
+InvoiceDaoIMPL vdb;
 public boolean addItem(int itemId,String itemName,int quantity,int price,String category,String subCategory,String brand,String file)
 {
 		
@@ -83,6 +86,24 @@ public int getLastId() {
 	idb=new IitemDaoIMPL();
 	return idb.getLastId();
 	
+}
+
+public Item getItem(int id)
+{
+	idb=new IitemDaoIMPL();
+	return idb.viewItem(id);
+}
+
+public ArrayList<Orders> getPlacedOrders() {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.getPlacedOrders();
+}
+
+public boolean approve(String[] alist) {
+	// TODO Auto-generated method stub
+	vdb=new InvoiceDaoIMPL();
+	return vdb.approve(alist);
 }
 
 
