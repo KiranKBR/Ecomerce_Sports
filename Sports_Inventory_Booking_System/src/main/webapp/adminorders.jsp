@@ -107,10 +107,11 @@ font-size: 25px;
 					for (Kart k : kart_list1) {
 				%>
 				<tr>
+				<td><%=k.getItemId()%></td>
 					<td><%=k.getItemName()%></td>
 					<td><%=k.getQuaKart() %></td>
 				
-				<td><%=k.getPriceKart() %></td>
+				<td><%=k.getPriceKart()*k.getQuaKart() %></td>
 				</tr>
 
 				<%

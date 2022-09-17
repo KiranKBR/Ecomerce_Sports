@@ -93,6 +93,11 @@ Item usr=(Item)session.getAttribute("idc");
 						<label>Sub Category</label> 
 						<input type="text" name="subcat" class="form-control" value="<%=usr.getSubCategory()%>">
 					</div>
+					<div class="form-group">
+						<label>File</label> 
+						<input type="file" name="image" class="form-control">
+					</div>
+					
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary" name="action" value="changeDetails">Update</button>
 					</div>

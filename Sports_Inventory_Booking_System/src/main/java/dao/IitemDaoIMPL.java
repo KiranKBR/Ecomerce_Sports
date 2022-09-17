@@ -57,9 +57,26 @@ public boolean changeDetails(Item i)
 					ps.setString(8, i.getFile());
 					ps.setInt(9, i.getItemId());
 					ps.executeUpdate();
+					
+					
+					
 					con.close();
-					return true;
+						
 			}catch(Exception e)
+			{
+			e.printStackTrace();
+			}
+			try {
+			Connection con=DbConnection.getConnection();
+			String cmd2="update kart set price=? where itemId=? and invoiceId=-1";
+			PreparedStatement ps2=con.prepareStatement(cmd2);
+			ps2.setInt(1, i.getRate());
+			ps2.setInt(2, i.getItemId());
+			ps2.executeUpdate();
+			con.close();
+			return true;
+			}
+			catch(Exception e)
 			{
 			e.printStackTrace();
 			}

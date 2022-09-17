@@ -213,16 +213,16 @@ public boolean addItem(int i, int quantity, String mail) {
 public boolean incQuantity(int id2, String mail2,int q) {
 	// TODO Auto-generated method stub
 	Connection con=DbConnection.getConnection();
-	String cmd="UPDATE kart SET quantiy=?,price=? WHERE itemId=? and emailId=? and invoiceId=?";
+	String cmd="UPDATE kart SET quantiy=? WHERE itemId=? and emailId=? and invoiceId=?";
 	PreparedStatement ps;
 	try {
-		int price=itt.getItemPrice(id2);
+		//int price=itt.getItemPrice(id2);
 		ps = con.prepareStatement(cmd);
 		ps.setInt(1,q);
-		ps.setInt(2, price*q);
-		ps.setString(4, mail2);
-		ps.setInt(3, id2);
-		ps.setInt(5, -1);
+		//ps.setInt(2, price);
+		ps.setString(3, mail2);
+		ps.setInt(2, id2);
+		ps.setInt(4, -1);
 		ps.executeUpdate();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -304,6 +304,8 @@ try
 
 Connection con=DbConnection.getConnection();
 
+
+//itt.changeQuantityBuy(iid, iid);
 String cmd="INSERT INTO orders VALUES(?,?,?,?)";
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setInt(1,gk.getInvoiceId());
@@ -364,56 +366,50 @@ public ArrayList<Kart> viewOrderDetails(int oid2, String mail) {
 
 
 
-public boolean buyKart(String mail,int oid,int price) {
+public Orders buyKart(ArrayList<Kart> gk) {
 	
-	Connection con=DbConnection.getConnection();
-	String cmd="UPDATE kart SET invoiceId=? WHERE invoiceId=-1 and emailId=?";
-	PreparedStatement ps;
-	try {
-		
-		ps = con.prepareStatement(cmd);
-		ps.setInt(1,oid+1);
-		//ps.setInt(2, id2);
-		ps.setString(2, mail);
-		ps.executeUpdate();
-		
-		Orders o=new Orders(oid+1,mail,price,"placed");
-		buy(o);
-		return true;
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	int sum=0;
+	String m=null;
+	int lid=getLastOrderId()+1;
+	for(Kart k: gk) 
+	{
+		m=k.getMail();
+		itt.changeQuantityBuy(k.getItemId(), k.getQuaKart());
+		sum=sum+k.getQuaKart()*k.getPriceKart();
+		k.setInvoiceId(lid);
+		buyfk(k);
 	}
-
-
-
-	return false;
 	
+	Orders o=new Orders(lid,m,sum,"placed");
+	buy(o);
+	return o;
 	
 }
 
 
 
-public boolean buyfk(Orders gk,int id) {
+public boolean buyfk(Kart gk) {
 	// TODO Auto-generated method stub
 
 try
 {
+	
+
+
 
 Connection con=DbConnection.getConnection();
 
 String cmd="UPDATE kart SET invoiceId=? WHERE invoiceId=-1 and emailId=? and itemId=?";
 PreparedStatement ps=con.prepareStatement(cmd);
 ps.setInt(1,gk.getInvoiceId());
-ps.setString(2,gk.getEmail());
-ps.setInt(3, id);
+ps.setString(2,gk.getMail());
+ps.setInt(3, gk.getItemId());
 
 //ps.setString(3, gk.getItemName()); //ps.setString(2, i.getItemName());
 //ps.setInt(3, i.getQuantity());
 //ps.setDouble(4,i.getRate());
 ps.executeUpdate();
-Orders o=new Orders(gk.getInvoiceId(),gk.getEmail(),gk.getPrice(),"placed");
-buy(o);
+
 
 return true;
 }catch(Exception e)
@@ -575,7 +571,7 @@ public int getTotalCartPrice(String mail) {
     try
 	{
 	Connection con=DbConnection.getConnection();
-	String cmd="SELECT  price from kart where invoiceId=-1 and emailId=? ";
+	String cmd="SELECT  quantiy,price from kart where invoiceId=-1 and emailId=? ";
 
 	PreparedStatement ps=con.prepareStatement(cmd);
 	ps.setString(1, mail);
@@ -583,9 +579,10 @@ public int getTotalCartPrice(String mail) {
 	ResultSet res=ps.executeQuery();
 	while(res.next())
 	{
-
-	int price=res.getInt(1);
-	sum=sum+price;
+	int q=res.getInt(1);
+	int price=res.getInt(2);
+	
+	sum=sum+price*q;
 	}
 
 

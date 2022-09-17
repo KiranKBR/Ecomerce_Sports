@@ -82,7 +82,7 @@ font-size: 25px;
 					<td><%=k.getItemName()%></td>
 					<td><%=k.getQuaKart() %></td>
 				
-				<td><%=k.getPriceKart() %></td>
+				<td><%=k.getPriceKart()*k.getQuaKart() %></td>
 				</tr>
 
 				<%

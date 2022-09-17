@@ -49,7 +49,7 @@ font-size: 25px;
 				%>
 				<tr>
 					<td><%=c.getItemName()%></td>
-					<td><%=c.getPriceKart() %></td>
+					<td><%=c.getPriceKart()*c.getQuaKart() %></td>
 					<td>
 					<form action="UserProcessor" method="get" class="form-inline">
 						<input type="hidden" name="id" value="<%= c.getItemId()%>" class="form-input">

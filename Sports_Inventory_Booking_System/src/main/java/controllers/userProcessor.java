@@ -40,6 +40,7 @@ public class userProcessor extends HttpServlet {
 		ArrayList<Kart> kart_list = null;
 		ArrayList<Kart> kart_list1 = null;
 		ArrayList<Kart> orderkart_list1 = null;
+		ArrayList<Kart> buyList=null;
 		ArrayList<Orders> order_list = null;
 		String target="";
 		LoginService lservice= new LoginService();
@@ -99,7 +100,7 @@ public class userProcessor extends HttpServlet {
 					quantity++;
 					c.setQuaKart(quantity);
 					int price=service.getItemPrice(id);			
-					c.setPriceKart(price*quantity);
+					c.setPriceKart(price);
 					service.incrQuantity(id, mail, quantity);
 					sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 					 flag=1;
@@ -148,12 +149,14 @@ public class userProcessor extends HttpServlet {
 			String mail4 =(String) request.getSession().getAttribute("user");
 			if(kart_list!=null)
 			{
-				service.buyKart(mail4,oid,service.getTotalCartPrice(email));
+				Orders ord=service.buyKart(kart_list);
+				
 				kart_list.clear();
 				order_list=service.viewOrders(mail4);
+				order_list.add(ord);
 				sn.setAttribute("kart_list", kart_list);
 				sn.setAttribute("order_list", order_list);
-				sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
+				sn.setAttribute("KartPrice", service.getTotalCartPrice(mail4));
 			}
 			target="kart.jsp";
 			break;
@@ -173,17 +176,19 @@ public class userProcessor extends HttpServlet {
 			 target="orders.jsp";
 			 break;
 		case "buyItem":
-			int id4 = Integer.parseInt(request.getParameter("id"));
+			int id4 = Integer.parseInt(request.getParameter("id"))
+			;
 			int oid3=service.getLastOrderId();
 			 int price1=service.getItemPrice(id4);
 			 String itemName3=service.getItemName(id4);
 			 mail=(String) request.getSession().getAttribute("user");
-			 Kart gk1=new Kart(oid3+1,id4,itemName3,mail,1,price1);
-			 service.addItem(gk1);
-			 Orders ord=new Orders(oid3+1,mail,price1,"placed");
+			 ArrayList<Kart> gk1=new ArrayList<Kart>();
+			 gk1.add(new Kart(-1,id4,itemName3,mail,1,price1));
+			 service.addItem(new Kart(-1,id4,itemName3,mail,1,price1));
+			 Orders ord=service.buyKart(gk1);
 			 order_list = (ArrayList<Orders>)sn.getAttribute("order_list");
 			 order_list.add(ord);
-			 service.buy(ord);
+			 
 			 sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 			 target="home.jsp";
 			 break;
@@ -193,22 +198,24 @@ public class userProcessor extends HttpServlet {
 			int id5 = Integer.parseInt(request.getParameter("id"));
 			int oid4=service.getLastOrderId();
 			 int price4=0;
+			 ArrayList<Kart> gk2=new ArrayList<Kart>();
 			//String itemName4=service.getItemName(id5);
 			 mail=(String) request.getSession().getAttribute("user");
 			 for (Kart c : kart_list) {
 					if (c.getItemId() == id5) {
-						//String itemName4=c.getItemName()
-						price4=c.getPriceKart();
+						String itemName4=c.getItemName();
+						//price4=c.getPriceKart()*c.getQuaKart();
+						 gk2.add(new Kart(-1,id5,itemName4,mail,c.getQuaKart(),c.getPriceKart()));
 						kart_list.remove(kart_list.indexOf(c));
 						break;
 					}
 				}
 			 //Kart gk1=new Kart(oid3+1,id4,itemName3,mail,1,price1);
 			 //service.addItem(gk1);
-			 Orders ord4=new Orders(oid4+1,mail,price4,"placed");
+			 Orders ord4=service.buyKart(gk2);
 			 order_list = (ArrayList<Orders>)sn.getAttribute("order_list");
 			 order_list.add(ord4);
-			 service.buyfk(ord4,id5);
+			 
 			 sn.setAttribute("KartPrice", service.getTotalCartPrice(email));
 			 target="home.jsp";
 			 break;
@@ -221,8 +228,8 @@ public class userProcessor extends HttpServlet {
 				if (c.getItemId() == id2) {
 					int quantity = c.getQuaKart();
 					quantity++;
-					int price5=service.getItemPrice(id2);			
-					c.setPriceKart(price5*quantity);
+					///int price5=service.getItemPrice(id2);			
+					
 					c.setQuaKart(quantity);
 					service.incrQuantity(id2, mail2, quantity);
 				}
@@ -240,8 +247,8 @@ public class userProcessor extends HttpServlet {
 				if (c.getItemId() == id3) {
 					int quantity = c.getQuaKart();
 					quantity--;
-					int price3=service.getItemPrice(id3);			
-					c.setPriceKart(price3*quantity);
+					//int price3=service.getItemPrice(id3);			
+					
 					c.setQuaKart(quantity);
 					service.incrQuantity(id3, mail3, quantity);
 				}
