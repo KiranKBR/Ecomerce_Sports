@@ -5,42 +5,64 @@
 <head>
 <title>Login</title>
 <%@include file="includes/head.jsp"%>
+
+</head>
 <script>
 //Example starter JavaScript for disabling form submissions if there are invalid fields
 
-</script>
-</head>
+function validateForm()
+{
+	
+	
+	var name=document.userForm.name.value;
+	//alert(name);
+	var email=document.userForm.email.value;
+//	alert(email);
+	var pass=document.userForm.password.value;
+	//alert(pass);
+	var age=document.userForm.age.value;
+	//alert(age);
+	var num=document.userForm.pnumber.value;
+	alert(num);
+	
+	
+	
+	return false;
+	
+	
+}
 
+</script>
 <body >
 	
 	<div class="container" >
 		<div class="card w-50 mx-auto my-5">
 			<div class="card-header text-center">User Signup</div>
 			<div class="card-body">
-				<form action="UserProcessor" class=" requires-validation" method="post" novalidate>
+				<form action="UserProcessor" name="userForm" method="post" onsubmit="return validateForm()" >
 					<div class="form-group">
-						<label for="validationCustom01" class="form-label">Email address</label> 
-						<input type="email" name="email" id="validationCustom01" class="form-control" placeholder="Enter email" required >
+						<label  class="form-label">Email address</label> 
+						<input type="text" name="email" class="form-control" placeholder="Enter email" required />
 					</div>
 					<div class="form-group">
-						<label for="validationCustom02" class="form-label">Name</label> 
-						<input type="text" name="name" id="validationCustom06\2" class="form-control" placeholder="Enter Name" required>
+						<label  class="form-label">Name</label> 
+						<input type="text" name="name"  class="form-control" placeholder="Enter Name" required/>
 					</div>
 					<div class="form-group">
-						<label for="validationCustom03" class="form-label">Password</label> 
-						<input type="password" name="password" id="validationCustom03" class="form-control" placeholder="Password" required>
+						<label  class="form-label">Password</label> 
+						<input type="password" name="password"  class="form-control" placeholder="Password" required/>
 					</div>
 					<div class="form-group">
-						<label for="validationCustom04" class="form-label">Age</label> 
-						<input type="number" name="age" id=validationCustom04" class="form-control" placeholder="Age"  required>
+						<label  class="form-label">Age</label> 
+						<input type="number" name="age"  class="form-control" placeholder="Age"  required/>
 					</div>
 					<div class="form-group">
-						<label for="validationCustom05" class="form-label">Address</label> 
-						<input type="text" name="address" id="validationCustom05" class="form-control" placeholder="Address" required>
+						<label  class="form-label">Address</label> 
+						<input type="text" name="address"  class="form-control" placeholder="Address" required/>
 					</div>
 					<div class="form-group">
-						<label for="validationCustom06" class="form-label">Phone number</label> 
-						<input type="text" name="number" id="validationCustom06" class="form-control" placeholder="Number" required>
+						<label  class="form-label">Phone number</label> 
+						<input type="number" name="pnumber"  class="form-control" placeholder="Number" required/>
 					</div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary" name="action" value="signup">SignUp</button>
