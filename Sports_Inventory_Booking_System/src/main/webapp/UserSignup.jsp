@@ -25,11 +25,21 @@ function validateForm()
 	var num=document.userForm.pnumber.value;
 	alert(num);
 	
-	
-	
-	return false;
-	
-	
+	 var phoneregex = /^\d{10}$/;
+	var mailregex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if(!email.match(mailregex))
+		{
+		
+			alert("email not valid");
+			return false;
+		
+		}
+	if(!num.match(phoneregex))
+		{
+		alert("Phone Number not valid");
+		return false;
+		}
+	return true;
 }
 
 </script>
@@ -62,7 +72,7 @@ function validateForm()
 					</div>
 					<div class="form-group">
 						<label  class="form-label">Phone number</label> 
-						<input type="number" name="pnumber"  class="form-control" placeholder="Number" required/>
+						<input type="text" name="pnumber"  class="form-control" placeholder="Number" required/>
 					</div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary" name="action" value="signup">SignUp</button>

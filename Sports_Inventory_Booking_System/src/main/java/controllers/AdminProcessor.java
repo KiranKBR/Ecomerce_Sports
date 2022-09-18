@@ -15,7 +15,7 @@ import dto.Item;
 import dto.Kart;
 import dto.Orders;
 import dto.User;
-import service.adminService;
+import service.AdminService;
 
 
 @WebServlet("/AdminProcessor")
@@ -32,7 +32,7 @@ public class AdminProcessor extends HttpServlet {
 		response.setContentType("text/html");
 		String action=request.getParameter("action");
 		String target="";
-		adminService service=new adminService();
+		AdminService service=new AdminService();
 		HttpSession sn=request.getSession();
 		ArrayList<Orders> olist=null;
 		ArrayList<Orders> olist2=null;

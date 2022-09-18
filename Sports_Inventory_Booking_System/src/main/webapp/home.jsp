@@ -4,12 +4,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
-
 String mail =(String) request.getSession().getAttribute("user");
 if (mail != null) {
+	
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    response.setDateHeader("Expires", 0);
     request.setAttribute("auth", mail);
 }
-userService us = new userService();
+else
+{
+	response.sendRedirect("index.jsp");
+}
+UserService us = new UserService();
 ArrayList<Item> products =us.viewAllItems();
 %>
 <!DOCTYPE html>

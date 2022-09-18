@@ -5,14 +5,21 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%
-userService us=new userService();
+UserService us=new UserService();
 String mail =(String) request.getSession().getAttribute("user");
 if (mail != null) {
+	
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    response.setDateHeader("Expires", 0);
     request.setAttribute("auth", mail);
+}
+else
+{
+	response.sendRedirect("index.jsp");
 }
 
 User usr=us.getUserById(mail);
-
 %>
 
 <!DOCTYPE html>
@@ -27,6 +34,10 @@ User usr=us.getUserById(mail);
 		<div class="card w-50 mx-auto my-5">
 			<div class="card-header text-center">Profile</div>
 			<div class="card-body">
+					<%
+				if (usr != null) {
+					
+				%>
 				<form action="UserProcessor" >
 					<div class="form-group">
 						<label>Email address</label> 
@@ -56,6 +67,8 @@ User usr=us.getUserById(mail);
 						<button type="submit" class="btn btn-primary" name="action" value="signup">Update</button>
 					</div>
 				</form>
+				<%
+				}%>
 			</div>
 		</div>
 	</div>

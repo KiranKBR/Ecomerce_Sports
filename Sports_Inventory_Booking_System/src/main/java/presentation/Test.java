@@ -5,19 +5,19 @@ import java.util.Scanner;
 import dto.Item;
 import dto.User;
 import service.LoginService;
-import service.adminService;
-import service.userService;
+import service.AdminService;
+import service.UserService;
 
-public class test {
+public class Test {
 
 
 
 public static void main(String[] args) {
 // TODO Auto-generated method stub
 Scanner scan =new Scanner(System.in);
-adminService as=new adminService();
+AdminService as=new AdminService();
 LoginService ls=new LoginService();
-userService us=new userService();
+UserService us=new UserService();
 int i;
 do
 {

@@ -3,9 +3,25 @@
 <%@page import="dao.*"%>
 <%@page import="service.*"%>
 <%
-ArrayList<Kart> kart_list = (ArrayList<Kart>)session.getAttribute("kart_list");
 
-int kartPrice=(int)session.getAttribute("KartPrice");
+String mail =(String) request.getSession().getAttribute("user");
+int kartPrice=0;
+ArrayList<Kart> kart_list =null;
+if (mail != null ) {
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    response.setDateHeader("Expires", 0);
+    request.setAttribute("auth", mail);
+    kart_list = (ArrayList<Kart>)session.getAttribute("kart_list");
+
+    kartPrice=(int)session.getAttribute("KartPrice");
+}
+else
+{
+	response.sendRedirect("index.jsp");
+}
+
+
 
 %>
 

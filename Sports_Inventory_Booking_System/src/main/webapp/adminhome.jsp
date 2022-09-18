@@ -4,13 +4,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
-
 String mail =(String) request.getSession().getAttribute("user");
 if (mail != null) {
+	
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+    response.setDateHeader("Expires", 0);
     request.setAttribute("auth", mail);
 }
+else
+{
+	response.sendRedirect("index.jsp");
+}
 
-userService us = new userService();
+UserService us = new UserService();
 ArrayList<Item> products =us.viewAllItems();
 Item usr=(Item)session.getAttribute("idc");
 %>

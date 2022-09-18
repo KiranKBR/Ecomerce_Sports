@@ -11,7 +11,7 @@ import dto.Item;
 import dto.Orders;
 import dto.User;
 
-public class adminService {
+public class AdminService {
 Scanner scan =new Scanner(System.in);
 IitemDaoIMPL idb;
 ILoginDaoIMPL udb;

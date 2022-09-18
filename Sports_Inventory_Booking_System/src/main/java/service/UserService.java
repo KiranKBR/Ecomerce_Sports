@@ -11,7 +11,7 @@ import dto.Kart;
 import dto.Orders;
 import dto.User;
 
-public class userService {
+public class UserService {
 
 Scanner scan =new Scanner(System.in);
 IitemDaoIMPL idb;

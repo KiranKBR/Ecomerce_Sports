@@ -16,10 +16,10 @@ import dto.Kart;
 import dto.Orders;
 import dto.User;
 import service.LoginService;
-import service.userService;
+import service.UserService;
 
 @WebServlet("/UserProcessor")
-public class userProcessor extends HttpServlet {
+public class UserProcessor extends HttpServlet {
 	int uId;
 	int price;
 	String name;
@@ -44,7 +44,7 @@ public class userProcessor extends HttpServlet {
 		ArrayList<Orders> order_list = null;
 		String target="";
 		LoginService lservice= new LoginService();
-		userService service=new userService();
+		UserService service=new UserService();
 		HttpSession sn=request.getSession();
 		System.out.println(action);
 		switch(action)
@@ -87,6 +87,13 @@ public class userProcessor extends HttpServlet {
 			break;
 		
 		case "addCart":
+			
+			if(sn.getAttribute("user")==null)
+			{
+				response.sendRedirect("UserLogin.jsp");
+				break;
+			}
+			
             int id = Integer.parseInt(request.getParameter("id"));
             String itemName=service.getItemName(id);
 
